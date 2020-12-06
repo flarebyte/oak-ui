@@ -1,6 +1,7 @@
 module Flarebyte.Oak.Domain.AttributeMetadata exposing (AttributeMetadata)
 
-import Flarebyte.Oak.Domain.TagSet exposing(TagSet)
+import Flarebyte.Oak.Domain.Tag exposing(Tag)
+import Set exposing(Set)
 
 type alias AttributeMetadata = 
   {
@@ -8,6 +9,6 @@ type alias AttributeMetadata =
   ,description: String
   ,alternateDescriptionList: List String
   ,unitText: String
-  ,tagSet: Never
+  ,tagSet: Set Tag
   }
 

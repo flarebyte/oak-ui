@@ -79,6 +79,8 @@ class ElmSource(NamedTuple):
 def package_to_path(packagename: str) -> str:
     return packagename.replace('.', '/')
 
+def sort_uniq(values: List[str])->List[str]:
+    return sorted(list(set(values)))
 
 def elm_file_content(elmSrc: ElmSource) -> str:
     name = to_type_alias_name(elmSrc.naming)
@@ -92,7 +94,7 @@ def elm_file_content(elmSrc: ElmSource) -> str:
                         exported_types + exported_functions)
 
     return (f"module {elmSrc.packageName}.{name} exposing ({exposed})\n\n" +
-            ("\n".join(elmSrc.importing)) + "\n\n" +
+            ("\n".join(sort_uniq(elmSrc.importing))) + "\n\n" +
             "\n\n".join([type_alias(i) for i in elmSrc.typeAliases]) + "\n" +
             "\n\n".join([elm_type(i) for i in elmSrc.elmTypes]) + "\n" +
             "\n\n".join([elm_function(i) for i in elmSrc.elmFuntions]))

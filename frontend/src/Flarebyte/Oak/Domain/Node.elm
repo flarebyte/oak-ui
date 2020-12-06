@@ -1,6 +1,6 @@
 module Flarebyte.Oak.Domain.Node exposing (Node)
 
-import Flarebyte.Oak.Domain.AttributeList exposing(AttributeList)
+import Flarebyte.Oak.Domain.Attribute exposing(Attribute)
 
 type alias Node = 
   {

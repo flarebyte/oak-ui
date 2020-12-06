@@ -1,8 +1,8 @@
 module Flarebyte.Oak.Domain.Graph exposing (Graph)
 
-import Flarebyte.Oak.Domain.NodeList exposing(NodeList)
-import Flarebyte.Oak.Domain.EdgeList exposing(EdgeList)
-import Flarebyte.Oak.Domain.AttributeMetadataList exposing(AttributeMetadataList)
+import Flarebyte.Oak.Domain.AttributeMetadata exposing(AttributeMetadata)
+import Flarebyte.Oak.Domain.Edge exposing(Edge)
+import Flarebyte.Oak.Domain.Node exposing(Node)
 
 type alias Graph = 
   {
