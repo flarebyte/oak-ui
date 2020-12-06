@@ -45,14 +45,14 @@ def generate_class_model(name: str):
         # skip before just created
         return
     children = [entities_dict[child] for child in entity.children]
-    imported_names = [elm.to_type_alias_name(child.naming) for child in children if "Class" in child.traits]
+    imported_names = [elm.to_type_alias_name(child.naming) for child in children if "Class" in child.traits or len(child.children)>0]
     imported = [f"import Flarebyte.Oak.Domain.{i} exposing({i})" for i in imported_names]
     typeAlias = elm.TypeAlias(entity.naming, "exported", [to_name_type(child) for child in children])
     elmSource = elm.ElmSource(entity.naming, "Flarebyte.Oak.Domain", imported, [typeAlias], [], [])
     elm.write_elm_file(elmSource)
-    #generate other models
+    #generate other class models
     for child in children:
-        if not "Class" in child.traits:
+        if not ("Class" in child.traits or len(child.children)>0):
             continue
         generate_class_model(child.name)
 
