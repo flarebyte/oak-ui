@@ -1,5 +1,7 @@
 from typing import List, Tuple, NamedTuple
 import re
+from pathlib import Path
+import time
 
 NameType = Tuple[List[str], str]
 
@@ -34,7 +36,7 @@ class TypeAlias(NamedTuple):
 def type_alias(value: TypeAlias) -> str:
     parts = "\n  ,".join([attribute(attr) for attr in value.attributes])
     name = to_type_alias_name(value.naming)
-    return f"type alias {name} = \n" + "  {\n   " + parts + "\n}"
+    return f"type alias {name} = \n" + "  {\n   " + parts + "\n  }"
 
 
 class ElmType(NamedTuple):
@@ -89,10 +91,10 @@ def elm_file_content(elmSrc: ElmSource) -> str:
     exposed = ", ".join(exported_type_alias +
                         exported_types + exported_functions)
 
-    return (f"module {elmSrc.packageName}.{name} exposing ({exposed})\n" +
-            "\n".join(elmSrc.importing) +
-            "\n\n".join([type_alias(i) for i in elmSrc.typeAliases]) +
-            "\n\n".join([elm_type(i) for i in elmSrc.elmTypes]) +
+    return (f"module {elmSrc.packageName}.{name} exposing ({exposed})\n\n" +
+            ("\n".join(elmSrc.importing)) + "\n\n" +
+            "\n\n".join([type_alias(i) for i in elmSrc.typeAliases]) + "\n" +
+            "\n\n".join([elm_type(i) for i in elmSrc.elmTypes]) + "\n" +
             "\n\n".join([elm_function(i) for i in elmSrc.elmFuntions]))
 
 
@@ -100,3 +102,14 @@ def write_elm_file(elmSrc: ElmSource):
     name = to_type_alias_name(elmSrc.naming)
     with open(f'{base_dir}/{package_to_path(elmSrc.packageName)}/{name}.elm', "w") as f:
         f.write(elm_file_content(elmSrc))
+
+def now_in_seconds():
+    return int(round(time.time()))
+
+def is_elm_file_recent(packageName: str, naming: List[str])->bool:
+    name = to_type_alias_name(naming)
+    elm_file = Path(f'{base_dir}/{package_to_path(packageName)}/{name}.elm')
+    if not elm_file.exists():
+        return False
+    else:
+        return (now_in_seconds() - int(elm_file.stat().st_mtime) < 5)
