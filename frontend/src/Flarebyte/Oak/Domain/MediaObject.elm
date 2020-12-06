@@ -5,6 +5,6 @@ type alias MediaObject =
   ,description: String
   ,abstract: String
   ,protectedMediaObjectURL: String
-  ,mediaObjectDataType: String
+  ,mediaObjectDataType: MediaObjectDataType
   ,robotCreatorName: String
 }
