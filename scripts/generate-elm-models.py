@@ -93,4 +93,5 @@ def generate_class_model(name: str):
         else:
             generate_class_model(child.name)
 
-generate_class_model('Graph')
+generate_class_model('Web Application')
+# generate_class_model('Graph')

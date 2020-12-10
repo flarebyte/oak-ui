@@ -5,6 +5,6 @@ import Flarebyte.Oak.Domain.Attribute exposing(Attribute)
 type alias Node = 
   {
    name: String
-  ,attributeList: List Attribute
+    , attributeList: List Attribute
   }
 

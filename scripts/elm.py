@@ -34,7 +34,7 @@ class TypeAlias(NamedTuple):
 
 
 def type_alias(value: TypeAlias) -> str:
-    parts = "\n  ,".join([attribute(attr) for attr in value.attributes])
+    parts = "\n    , ".join([attribute(attr) for attr in value.attributes])
     name = to_type_alias_name(value.naming)
     return f"type alias {name} = \n" + "  {\n   " + parts + "\n  }"
 

@@ -6,9 +6,9 @@ import Set exposing(Set)
 type alias AttributeMetadata = 
   {
    name: String
-  ,description: String
-  ,alternateDescriptionList: List String
-  ,unitText: String
-  ,tagSet: Set Tag
+    , description: String
+    , alternateDescriptionList: List String
+    , unitText: String
+    , tagSet: Set Tag
   }
 

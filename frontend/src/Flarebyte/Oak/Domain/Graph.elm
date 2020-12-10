@@ -7,7 +7,7 @@ import Flarebyte.Oak.Domain.Node exposing(Node)
 type alias Graph = 
   {
    nodeList: List Node
-  ,edgeList: List Edge
-  ,attributeMetadataList: List AttributeMetadata
+    , edgeList: List Edge
+    , attributeMetadataList: List AttributeMetadata
   }
 

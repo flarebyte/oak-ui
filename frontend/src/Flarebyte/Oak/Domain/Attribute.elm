@@ -6,7 +6,7 @@ import Set exposing(Set)
 type alias Attribute = 
   {
    value: String
-  ,optionalValueList: List String
-  ,tagSet: Set Tag
+    , optionalValueList: List String
+    , tagSet: Set Tag
   }
 
