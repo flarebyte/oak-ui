@@ -4,6 +4,7 @@ from pathlib import Path
 import time
 
 NameType = Tuple[List[str], str]
+NameValue = Tuple[List[str], str]
 
 non_az09 = re.compile('[^A-Za-z0-9]+')
 
@@ -26,6 +27,9 @@ def to_attr_name(namings: List[str]) -> str:
 def attribute(value: NameType) -> str:
     return f"{to_attr_name(value[0])}: {value[1]}"
 
+def attribute_eq(value: NameType) -> str:
+    return f"{to_attr_name(value[0])}= {value[1]}"
+
 
 class TypeAlias(NamedTuple):
     naming: List[str]
@@ -34,10 +38,21 @@ class TypeAlias(NamedTuple):
 
 
 def type_alias(value: TypeAlias) -> str:
-    parts = "\n    , ".join([attribute(attr) for attr in value.attributes])
+    parts = "\n    ,".join([attribute(attr) for attr in value.attributes])
     name = to_type_alias_name(value.naming)
     return f"type alias {name} = \n" + "  {\n   " + parts + "\n  }"
 
+class TypeAliasAssign(NamedTuple):
+    naming: List[str]
+    type_naming: List[str]
+    flags: str
+    attributes: List[NameValue]
+
+def type_alias_assign(value: TypeAliasAssign) -> str:
+    parts = "\n    ,".join([attribute_eq(attr) for attr in value.attributes])
+    name = to_attr_name(value.naming)
+    type_name = to_type_alias_name(value.type_naming)
+    return f"{name}: {type_name} \n" + f"{name} = \n" + "  {\n   " + parts + "\n  }"
 
 class ElmType(NamedTuple):
     naming: List[str]
@@ -46,9 +61,9 @@ class ElmType(NamedTuple):
 
 
 def elm_type(value: ElmType) -> str:
-    parts = "\n|".join(value.options)
+    parts = "\n  | ".join(value.options)
     name = to_type_alias_name(value.naming)
-    return f"type {name} = \n" + "{\n" + parts + "\n}"
+    return f"type {name} = \n" + "\n  " + parts + "\n"
 
 
 class ElmFunction(NamedTuple):
@@ -73,6 +88,7 @@ class ElmSource(NamedTuple):
     importing: List[str]
     typeAliases: List[TypeAlias]
     elmTypes: List[ElmType]
+    typeAliasAssigns: List[TypeAliasAssign]
     elmFuntions: List[ElmFunction]
 
 
@@ -90,13 +106,16 @@ def elm_file_content(elmSrc: ElmSource) -> str:
         a.naming) for a in elmSrc.elmTypes if "exported" in a.flags]
     exported_functions = [to_type_alias_name(
         a.naming) for a in elmSrc.elmFuntions if "exported" in a.flags]
+    exported_alias_assign = [to_attr_name(
+        a.naming) for a in elmSrc.typeAliasAssigns if "exported" in a.flags]
     exposed = ", ".join(exported_type_alias +
-                        exported_types + exported_functions)
+                        exported_types + exported_functions + exported_alias_assign)
 
     return (f"module {elmSrc.packageName}.{name} exposing ({exposed})\n\n" +
             ("\n".join(sort_uniq(elmSrc.importing))) + "\n\n" +
-            "\n\n".join([type_alias(i) for i in elmSrc.typeAliases]) + "\n" +
             "\n\n".join([elm_type(i) for i in elmSrc.elmTypes]) + "\n" +
+            "\n\n".join([type_alias(i) for i in elmSrc.typeAliases]) + "\n" +
+            "\n\n".join([type_alias_assign(i) for i in elmSrc.typeAliasAssigns]) + "\n" +
             "\n\n".join([elm_function(i) for i in elmSrc.elmFuntions]))
 
 

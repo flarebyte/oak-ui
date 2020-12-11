@@ -78,6 +78,7 @@ class Entity(NamedTuple):
     naming: List[str]
     traits: List[str]
     children: List[str]
+    config: str
 
 def read_entity_csv() -> List[Entity]:
     rows = read_csv('entity')
@@ -86,7 +87,8 @@ def read_entity_csv() -> List[Entity]:
             row["Name"].strip(),
             to_list(row["Naming"]),
             to_list(row["Traits"]),
-            to_list(row["Children"])
+            to_list(row["Children"]),
+            row["Config"].strip()
         ) for row in rows
     ]
 
