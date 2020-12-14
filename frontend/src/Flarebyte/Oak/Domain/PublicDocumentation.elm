@@ -55,3 +55,21 @@ resetState =
     ,publicWebPage= StateStartPublicDocumentationPublicWebPage
     ,documentationCategory= StateStartPublicDocumentationDocumentationCategory
   }
+validatePublicDocumentationDescription: String -> StatePublicDocumentationDescription
+validatePublicDocumentationDescription value=
+    if String.length value == 0 then
+          StateStartPublicDocumentationDescription
+      else if String.length value > 50 then
+         StateTooLongPublicDocumentationDescription
+      else
+          StateAcceptablePublicDocumentationDescription
+
+
+validatePublicDocumentationPublicWebPage: String -> StatePublicDocumentationPublicWebPage
+validatePublicDocumentationPublicWebPage value=
+    if String.length value == 0 then
+          StateStartPublicDocumentationPublicWebPage
+      else if String.length value > 50 then
+         StateTooLongPublicDocumentationPublicWebPage
+      else
+          StateAcceptablePublicDocumentationPublicWebPage

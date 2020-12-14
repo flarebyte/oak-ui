@@ -53,3 +53,13 @@ validateMediaObjectDataTypeName value=
          StateTooLongMediaObjectDataTypeName
       else
           StateAcceptableMediaObjectDataTypeName
+
+
+validateMediaObjectDataTypeDescription: String -> StateMediaObjectDataTypeDescription
+validateMediaObjectDataTypeDescription value=
+    if String.length value == 0 then
+          StateStartMediaObjectDataTypeDescription
+      else if String.length value > 50 then
+         StateTooLongMediaObjectDataTypeDescription
+      else
+          StateAcceptableMediaObjectDataTypeDescription

@@ -53,3 +53,13 @@ validateDocumentationCategoryName value=
          StateTooLongDocumentationCategoryName
       else
           StateAcceptableDocumentationCategoryName
+
+
+validateDocumentationCategoryDescription: String -> StateDocumentationCategoryDescription
+validateDocumentationCategoryDescription value=
+    if String.length value == 0 then
+          StateStartDocumentationCategoryDescription
+      else if String.length value > 50 then
+         StateTooLongDocumentationCategoryDescription
+      else
+          StateAcceptableDocumentationCategoryDescription

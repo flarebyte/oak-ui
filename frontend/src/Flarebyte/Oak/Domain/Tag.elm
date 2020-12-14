@@ -53,3 +53,13 @@ validateTagName value=
          StateTooLongTagName
       else
           StateAcceptableTagName
+
+
+validateTagDescription: String -> StateTagDescription
+validateTagDescription value=
+    if String.length value == 0 then
+          StateStartTagDescription
+      else if String.length value > 50 then
+         StateTooLongTagDescription
+      else
+          StateAcceptableTagDescription

@@ -53,3 +53,13 @@ validateLanguageName value=
          StateTooLongLanguageName
       else
           StateAcceptableLanguageName
+
+
+validateLanguageDescription: String -> StateLanguageDescription
+validateLanguageDescription value=
+    if String.length value == 0 then
+          StateStartLanguageDescription
+      else if String.length value > 50 then
+         StateTooLongLanguageDescription
+      else
+          StateAcceptableLanguageDescription

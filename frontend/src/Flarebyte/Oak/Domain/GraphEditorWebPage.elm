@@ -88,3 +88,11 @@ resetState =
     ,tagSet= StateStartGraphEditorWebPageTagSet
     ,unitCodeList= StateStartGraphEditorWebPageUnitCodeList
   }
+validateGraphEditorWebPageOptionalErrorMessage: String -> StateGraphEditorWebPageOptionalErrorMessage
+validateGraphEditorWebPageOptionalErrorMessage value=
+    if String.length value == 0 then
+          StateStartGraphEditorWebPageOptionalErrorMessage
+      else if String.length value > 50 then
+         StateTooLongGraphEditorWebPageOptionalErrorMessage
+      else
+          StateAcceptableGraphEditorWebPageOptionalErrorMessage

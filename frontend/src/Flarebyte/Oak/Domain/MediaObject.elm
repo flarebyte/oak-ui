@@ -96,3 +96,43 @@ validateMediaObjectName value=
          StateTooLongMediaObjectName
       else
           StateAcceptableMediaObjectName
+
+
+validateMediaObjectDescription: String -> StateMediaObjectDescription
+validateMediaObjectDescription value=
+    if String.length value == 0 then
+          StateStartMediaObjectDescription
+      else if String.length value > 50 then
+         StateTooLongMediaObjectDescription
+      else
+          StateAcceptableMediaObjectDescription
+
+
+validateMediaObjectAbstract: String -> StateMediaObjectAbstract
+validateMediaObjectAbstract value=
+    if String.length value == 0 then
+          StateStartMediaObjectAbstract
+      else if String.length value > 50 then
+         StateTooLongMediaObjectAbstract
+      else
+          StateAcceptableMediaObjectAbstract
+
+
+validateMediaObjectProtectedMediaObjectURL: String -> StateMediaObjectProtectedMediaObjectURL
+validateMediaObjectProtectedMediaObjectURL value=
+    if String.length value == 0 then
+          StateStartMediaObjectProtectedMediaObjectURL
+      else if String.length value > 50 then
+         StateTooLongMediaObjectProtectedMediaObjectURL
+      else
+          StateAcceptableMediaObjectProtectedMediaObjectURL
+
+
+validateMediaObjectRobotCreatorName: String -> StateMediaObjectRobotCreatorName
+validateMediaObjectRobotCreatorName value=
+    if String.length value == 0 then
+          StateStartMediaObjectRobotCreatorName
+      else if String.length value > 50 then
+         StateTooLongMediaObjectRobotCreatorName
+      else
+          StateAcceptableMediaObjectRobotCreatorName

@@ -53,3 +53,13 @@ validateUnitCodeName value=
          StateTooLongUnitCodeName
       else
           StateAcceptableUnitCodeName
+
+
+validateUnitCodeDescription: String -> StateUnitCodeDescription
+validateUnitCodeDescription value=
+    if String.length value == 0 then
+          StateStartUnitCodeDescription
+      else if String.length value > 50 then
+         StateTooLongUnitCodeDescription
+      else
+          StateAcceptableUnitCodeDescription

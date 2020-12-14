@@ -88,6 +88,16 @@ validateAttributeMetadataName value=
           StateAcceptableAttributeMetadataName
 
 
+validateAttributeMetadataDescription: String -> StateAttributeMetadataDescription
+validateAttributeMetadataDescription value=
+    if String.length value == 0 then
+          StateStartAttributeMetadataDescription
+      else if String.length value > 50 then
+         StateTooLongAttributeMetadataDescription
+      else
+          StateAcceptableAttributeMetadataDescription
+
+
 validateAttributeMetadataUnitText: String -> StateAttributeMetadataUnitText
 validateAttributeMetadataUnitText value=
     if String.length value == 0 then
@@ -96,3 +106,13 @@ validateAttributeMetadataUnitText value=
          StateTooLongAttributeMetadataUnitText
       else
           StateAcceptableAttributeMetadataUnitText
+
+
+validateAttributeMetadataAlternateDescriptionList: List String -> StateAttributeMetadataAlternateDescriptionList
+validateAttributeMetadataAlternateDescriptionList values=
+    if List.isEmpty values then
+          StateStartAttributeMetadataAlternateDescriptionList
+      else if List.length values > 50 then
+         StateTooLongAttributeMetadataAlternateDescriptionList
+      else
+          StateAcceptableAttributeMetadataAlternateDescriptionList
