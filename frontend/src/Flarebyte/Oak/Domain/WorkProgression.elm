@@ -2,17 +2,6 @@ module Flarebyte.Oak.Domain.WorkProgression exposing (WorkProgression, reset)
 
 
 
-type StateWorkProgressionWorkIdentifier = 
-
-  StateStartWorkProgressionWorkIdentifier
-  | StateAcceptableWorkProgressionWorkIdentifier
-  | StateTooLongWorkProgressionWorkIdentifier
-
-
-type StateWorkProgressionDateModified = 
-
-  StateStartWorkProgressionDateModified
-  | StateAcceptableWorkProgressionDateModified
 
 type alias WorkProgression = 
   {

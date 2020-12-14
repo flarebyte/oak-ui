@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.Edge exposing (Edge, EdgeState, reset, resetState)
+module Flarebyte.Oak.Domain.Edge exposing (Edge, EdgeState, EdgeAndState, reset, resetState)
 
 import Flarebyte.Oak.Domain.Attribute exposing(Attribute)
 
@@ -43,6 +43,12 @@ type alias EdgeState =
     ,fromNode: StateEdgeFromNode
     ,toNode: StateEdgeToNode
   }
+
+type alias EdgeAndState = 
+  {
+   value: Edge
+    ,state: EdgeState
+  }
 reset: Edge 
 reset = 
   {
@@ -60,3 +66,31 @@ resetState =
     ,fromNode= StateStartEdgeFromNode
     ,toNode= StateStartEdgeToNode
   }
+validateEdgeName: String -> StateEdgeName
+validateEdgeName value=
+    if String.length value == 0 then
+          StateStartEdgeName
+      else if String.length value > 50 then
+         StateTooLongEdgeName
+      else
+          StateAcceptableEdgeName
+
+
+validateEdgeFromNode: String -> StateEdgeFromNode
+validateEdgeFromNode value=
+    if String.length value == 0 then
+          StateStartEdgeFromNode
+      else if String.length value > 50 then
+         StateTooLongEdgeFromNode
+      else
+          StateAcceptableEdgeFromNode
+
+
+validateEdgeToNode: String -> StateEdgeToNode
+validateEdgeToNode value=
+    if String.length value == 0 then
+          StateStartEdgeToNode
+      else if String.length value > 50 then
+         StateTooLongEdgeToNode
+      else
+          StateAcceptableEdgeToNode

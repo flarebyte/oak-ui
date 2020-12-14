@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.Node exposing (Node, NodeState, reset, resetState)
+module Flarebyte.Oak.Domain.Node exposing (Node, NodeState, NodeAndState, reset, resetState)
 
 import Flarebyte.Oak.Domain.Attribute exposing(Attribute)
 
@@ -25,6 +25,12 @@ type alias NodeState =
    name: StateNodeName
     ,attributeList: StateNodeAttributeList
   }
+
+type alias NodeAndState = 
+  {
+   value: Node
+    ,state: NodeState
+  }
 reset: Node 
 reset = 
   {
@@ -38,3 +44,11 @@ resetState =
    name= StateStartNodeName
     ,attributeList= StateStartNodeAttributeList
   }
+validateNodeName: String -> StateNodeName
+validateNodeName value=
+    if String.length value == 0 then
+          StateStartNodeName
+      else if String.length value > 50 then
+         StateTooLongNodeName
+      else
+          StateAcceptableNodeName

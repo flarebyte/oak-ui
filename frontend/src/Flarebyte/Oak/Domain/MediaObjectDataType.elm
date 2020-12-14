@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.MediaObjectDataType exposing (MediaObjectDataType, MediaObjectDataTypeState, reset, resetState)
+module Flarebyte.Oak.Domain.MediaObjectDataType exposing (MediaObjectDataType, MediaObjectDataTypeState, MediaObjectDataTypeAndState, reset, resetState)
 
 
 
@@ -26,6 +26,12 @@ type alias MediaObjectDataTypeState =
    name: StateMediaObjectDataTypeName
     ,description: StateMediaObjectDataTypeDescription
   }
+
+type alias MediaObjectDataTypeAndState = 
+  {
+   value: MediaObjectDataType
+    ,state: MediaObjectDataTypeState
+  }
 reset: MediaObjectDataType 
 reset = 
   {
@@ -39,3 +45,11 @@ resetState =
    name= StateStartMediaObjectDataTypeName
     ,description= StateStartMediaObjectDataTypeDescription
   }
+validateMediaObjectDataTypeName: String -> StateMediaObjectDataTypeName
+validateMediaObjectDataTypeName value=
+    if String.length value == 0 then
+          StateStartMediaObjectDataTypeName
+      else if String.length value > 50 then
+         StateTooLongMediaObjectDataTypeName
+      else
+          StateAcceptableMediaObjectDataTypeName

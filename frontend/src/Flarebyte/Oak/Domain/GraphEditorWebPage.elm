@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.GraphEditorWebPage exposing (GraphEditorWebPage, GraphEditorWebPageState, reset, resetState)
+module Flarebyte.Oak.Domain.GraphEditorWebPage exposing (GraphEditorWebPage, GraphEditorWebPageState, GraphEditorWebPageAndState, reset, resetState)
 
 import Flarebyte.Oak.Domain.Graph exposing(Graph)
 import Flarebyte.Oak.Domain.StatisticalMetadata exposing(StatisticalMetadata)
@@ -60,6 +60,12 @@ type alias GraphEditorWebPageState =
     ,optionalErrorMessage: StateGraphEditorWebPageOptionalErrorMessage
     ,tagSet: StateGraphEditorWebPageTagSet
     ,unitCodeList: StateGraphEditorWebPageUnitCodeList
+  }
+
+type alias GraphEditorWebPageAndState = 
+  {
+   value: GraphEditorWebPage
+    ,state: GraphEditorWebPageState
   }
 reset: GraphEditorWebPage 
 reset = 

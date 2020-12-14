@@ -35,6 +35,8 @@ class TypeAlias(NamedTuple):
     naming: List[str]
     flags: str
     attributes: List[NameType]
+    def get_name(self):
+        return to_type_alias_name(self.naming)
 
 
 def type_alias(value: TypeAlias) -> str:
@@ -79,7 +81,7 @@ def elm_function(value: ElmFunction):
     fsignature = " -> ".join(value.signature)
     fparams = " ".join(value.params)
     body = "\n  ".join(value.lines)
-    return f"{name}: {fsignature}\n" + f"{name}: {fparams}\n" + body
+    return f"{name}: {fsignature}\n" + f"{name} {fparams}=\n" + body + "\n"
 
 
 class ElmSource(NamedTuple):

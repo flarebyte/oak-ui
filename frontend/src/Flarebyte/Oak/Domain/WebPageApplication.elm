@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.WebPageApplication exposing (WebPageApplication, WebPageApplicationState, reset, resetState)
+module Flarebyte.Oak.Domain.WebPageApplication exposing (WebPageApplication, WebPageApplicationState, WebPageApplicationAndState, reset, resetState)
 
 import Flarebyte.Oak.Domain.DocumentationListWebPage exposing(DocumentationListWebPage)
 import Flarebyte.Oak.Domain.GraphEditorWebPage exposing(GraphEditorWebPage)
@@ -104,6 +104,12 @@ type alias WebPageApplicationState =
     ,tagSet: StateWebPageApplicationTagSet
     ,unitCodeList: StateWebPageApplicationUnitCodeList
     ,node: StateWebPageApplicationNode
+  }
+
+type alias WebPageApplicationAndState = 
+  {
+   value: WebPageApplication
+    ,state: WebPageApplicationState
   }
 reset: WebPageApplication 
 reset = 

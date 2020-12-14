@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.VisualChoiceWebPage exposing (VisualChoiceWebPage, VisualChoiceWebPageState, reset, resetState)
+module Flarebyte.Oak.Domain.VisualChoiceWebPage exposing (VisualChoiceWebPage, VisualChoiceWebPageState, VisualChoiceWebPageAndState, reset, resetState)
 
 import Flarebyte.Oak.Domain.MediaObject exposing(MediaObject)
 import Flarebyte.Oak.Domain.WorkProgression exposing(WorkProgression)
@@ -32,6 +32,12 @@ type alias VisualChoiceWebPageState =
    mediaObjectList: StateVisualChoiceWebPageMediaObjectList
     ,webPageState: StateVisualChoiceWebPageWebPageState
     ,workProgression: StateVisualChoiceWebPageWorkProgression
+  }
+
+type alias VisualChoiceWebPageAndState = 
+  {
+   value: VisualChoiceWebPage
+    ,state: VisualChoiceWebPageState
   }
 reset: VisualChoiceWebPage 
 reset = 

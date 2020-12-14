@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.Graph exposing (Graph, GraphState, reset, resetState)
+module Flarebyte.Oak.Domain.Graph exposing (Graph, GraphState, GraphAndState, reset, resetState)
 
 import Flarebyte.Oak.Domain.AttributeMetadata exposing(AttributeMetadata)
 import Flarebyte.Oak.Domain.Edge exposing(Edge)
@@ -33,6 +33,12 @@ type alias GraphState =
    nodeList: StateGraphNodeList
     ,edgeList: StateGraphEdgeList
     ,attributeMetadataList: StateGraphAttributeMetadataList
+  }
+
+type alias GraphAndState = 
+  {
+   value: Graph
+    ,state: GraphState
   }
 reset: Graph 
 reset = 

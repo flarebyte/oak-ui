@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.Attribute exposing (Attribute, AttributeState, reset, resetState)
+module Flarebyte.Oak.Domain.Attribute exposing (Attribute, AttributeState, AttributeAndState, reset, resetState)
 
 import Flarebyte.Oak.Domain.Tag exposing(Tag)
 import Set exposing(Set)
@@ -35,6 +35,12 @@ type alias AttributeState =
     ,optionalValueList: StateAttributeOptionalValueList
     ,tagSet: StateAttributeTagSet
   }
+
+type alias AttributeAndState = 
+  {
+   value: Attribute
+    ,state: AttributeState
+  }
 reset: Attribute 
 reset = 
   {
@@ -50,3 +56,21 @@ resetState =
     ,optionalValueList= StateStartAttributeOptionalValueList
     ,tagSet= StateStartAttributeTagSet
   }
+validateAttributeValue: String -> StateAttributeValue
+validateAttributeValue value=
+    if String.length value == 0 then
+          StateStartAttributeValue
+      else if String.length value > 50 then
+         StateTooLongAttributeValue
+      else
+          StateAcceptableAttributeValue
+
+
+validateAttributeOptionalValueList: List String -> StateAttributeOptionalValueList
+validateAttributeOptionalValueList values=
+    if List.isEmpty values then
+          StateStartAttributeOptionalValueList
+      else if List.length values > 50 then
+         StateTooLongAttributeOptionalValueList
+      else
+          StateAcceptableAttributeOptionalValueList

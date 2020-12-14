@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.AttributeMetadata exposing (AttributeMetadata, AttributeMetadataState, reset, resetState)
+module Flarebyte.Oak.Domain.AttributeMetadata exposing (AttributeMetadata, AttributeMetadataState, AttributeMetadataAndState, reset, resetState)
 
 import Flarebyte.Oak.Domain.Tag exposing(Tag)
 import Set exposing(Set)
@@ -53,6 +53,12 @@ type alias AttributeMetadataState =
     ,unitText: StateAttributeMetadataUnitText
     ,tagSet: StateAttributeMetadataTagSet
   }
+
+type alias AttributeMetadataAndState = 
+  {
+   value: AttributeMetadata
+    ,state: AttributeMetadataState
+  }
 reset: AttributeMetadata 
 reset = 
   {
@@ -72,3 +78,21 @@ resetState =
     ,unitText= StateStartAttributeMetadataUnitText
     ,tagSet= StateStartAttributeMetadataTagSet
   }
+validateAttributeMetadataName: String -> StateAttributeMetadataName
+validateAttributeMetadataName value=
+    if String.length value == 0 then
+          StateStartAttributeMetadataName
+      else if String.length value > 50 then
+         StateTooLongAttributeMetadataName
+      else
+          StateAcceptableAttributeMetadataName
+
+
+validateAttributeMetadataUnitText: String -> StateAttributeMetadataUnitText
+validateAttributeMetadataUnitText value=
+    if String.length value == 0 then
+          StateStartAttributeMetadataUnitText
+      else if String.length value > 50 then
+         StateTooLongAttributeMetadataUnitText
+      else
+          StateAcceptableAttributeMetadataUnitText

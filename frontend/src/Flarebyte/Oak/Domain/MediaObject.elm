@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.MediaObject exposing (MediaObject, MediaObjectState, reset, resetState)
+module Flarebyte.Oak.Domain.MediaObject exposing (MediaObject, MediaObjectState, MediaObjectAndState, reset, resetState)
 
 import Flarebyte.Oak.Domain.MediaObjectDataType exposing(MediaObjectDataType)
 
@@ -61,6 +61,12 @@ type alias MediaObjectState =
     ,mediaObjectDataType: StateMediaObjectMediaObjectDataType
     ,robotCreatorName: StateMediaObjectRobotCreatorName
   }
+
+type alias MediaObjectAndState = 
+  {
+   value: MediaObject
+    ,state: MediaObjectState
+  }
 reset: MediaObject 
 reset = 
   {
@@ -82,3 +88,11 @@ resetState =
     ,mediaObjectDataType= StateStartMediaObjectMediaObjectDataType
     ,robotCreatorName= StateStartMediaObjectRobotCreatorName
   }
+validateMediaObjectName: String -> StateMediaObjectName
+validateMediaObjectName value=
+    if String.length value == 0 then
+          StateStartMediaObjectName
+      else if String.length value > 50 then
+         StateTooLongMediaObjectName
+      else
+          StateAcceptableMediaObjectName

@@ -156,6 +156,27 @@ def to_reset_state_name_value(parent: acquire.Entity, value: acquire.Entity) -> 
     return (value.naming, elm.to_type_alias_name(to_elm_type_state(parent, value).options[0]))
 
 
+def to_string_validator_fn(suffix_naming: List[str], max: int) -> elm.ElmFunction:
+    lines = ["    if String.length value == 0 then",
+             f'        {elm.to_type_alias_name(["State", "Start"]+ suffix_naming)}',
+             f'    else if String.length value > {max} then',
+             f'       {elm.to_type_alias_name(["State", "Too", "Long"]+ suffix_naming)}',
+             "    else",
+             f'        {elm.to_type_alias_name(["State", "Acceptable"]+ suffix_naming)}'
+             ]
+    return elm.ElmFunction(["validate"]+suffix_naming, "", ["String", elm.to_type_alias_name(["State"]+suffix_naming)], ["value"], lines)
+
+def to_string_list_validator_fn(suffix_naming: List[str], max: int) -> elm.ElmFunction:
+    lines = ["    if List.isEmpty values then",
+             f'        {elm.to_type_alias_name(["State", "Start"]+ suffix_naming)}',
+             f'    else if List.length values > {max} then',
+             f'       {elm.to_type_alias_name(["State", "Too", "Long"]+ suffix_naming)}',
+             "    else",
+             f'        {elm.to_type_alias_name(["State", "Acceptable"]+ suffix_naming)}'
+             ]
+    return elm.ElmFunction(["validate"]+suffix_naming, "", ["List String", elm.to_type_alias_name(["State"]+suffix_naming)], ["values"], lines)
+
+
 def generate_class_model(name: str):
     entity = entities_dict[name]
     if elm.is_elm_file_recent("Flarebyte.Oak.Domain", entity.naming):
@@ -170,18 +191,29 @@ def generate_class_model(name: str):
     typeAliasReset = elm.TypeAliasAssign(["Reset"], entity.naming, "exported", [
         to_reset_name_value(entity, child) for child in children])
     typeAliasAssigments = [typeAliasReset]
+    elmTypes = []
+    elmFuntions = []
 
-    #Editable
+    # Editable
     if not "Read only" in entity.traits:
+        # State type alias
         typeAliasState = elm.TypeAlias(entity.naming+["State"], "exported", [
             to_state_name_type(entity, child) for child in children])
         typeAliases.append(typeAliasState)
         typeAliasResetState = elm.TypeAliasAssign(["Reset", "State"], entity.naming+["State"], "exported", [
             to_reset_state_name_value(entity, child) for child in children])
         typeAliasAssigments.append(typeAliasResetState)
-    elmTypes = [to_elm_type_state(entity, child) for child in children]
+        elmTypes = elmTypes + \
+            [to_elm_type_state(entity, child) for child in children]
+        # Combined type alias
+        typeAliasAndState = elm.TypeAlias(entity.naming+["And", "State"], "exported", [
+            (["value"], typeAlias.get_name()), (["state"], typeAliasState.get_name())])
+        typeAliases.append(typeAliasAndState)
+        # Validators
+        elmFuntions +=  [to_string_validator_fn(entity.naming+child.naming, 50) for child in children if "String" in child.traits and not is_just_sequence(child)]
+        elmFuntions +=  [to_string_list_validator_fn(entity.naming+child.naming, 50) for child in children if "String" in child.traits and "List" in child.traits]
     elmSource = elm.ElmSource(
-        entity.naming, "Flarebyte.Oak.Domain", imported, typeAliases, elmTypes, typeAliasAssigments, [])
+        entity.naming, "Flarebyte.Oak.Domain", imported, typeAliases, elmTypes, typeAliasAssigments, elmFuntions)
     elm.write_elm_file(elmSource)
     # generate other class models
     for child in children:

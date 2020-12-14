@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.PublicDocumentation exposing (PublicDocumentation, PublicDocumentationState, reset, resetState)
+module Flarebyte.Oak.Domain.PublicDocumentation exposing (PublicDocumentation, PublicDocumentationState, PublicDocumentationAndState, reset, resetState)
 
 import Flarebyte.Oak.Domain.DocumentationCategory exposing(DocumentationCategory)
 
@@ -33,6 +33,12 @@ type alias PublicDocumentationState =
    description: StatePublicDocumentationDescription
     ,publicWebPage: StatePublicDocumentationPublicWebPage
     ,documentationCategory: StatePublicDocumentationDocumentationCategory
+  }
+
+type alias PublicDocumentationAndState = 
+  {
+   value: PublicDocumentation
+    ,state: PublicDocumentationState
   }
 reset: PublicDocumentation 
 reset = 
