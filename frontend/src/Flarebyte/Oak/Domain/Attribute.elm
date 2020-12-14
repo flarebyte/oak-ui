@@ -50,7 +50,3 @@ resetState =
     ,optionalValueList= StateStartAttributeOptionalValueList
     ,tagSet= StateStartAttributeTagSet
   }
-
-toState: Attribute -> AttributeState
-toState attribute =
-  resetState

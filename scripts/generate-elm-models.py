@@ -166,15 +166,22 @@ def generate_class_model(name: str):
     imported = flatten([to_import_statement(child) for child in children])
     typeAlias = elm.TypeAlias(entity.naming, "exported", [
                               to_name_type(child) for child in children])
-    typeAliasState = elm.TypeAlias(entity.naming+["State"], "exported", [
-        to_state_name_type(entity, child) for child in children])
+    typeAliases = [typeAlias]
     typeAliasReset = elm.TypeAliasAssign(["Reset"], entity.naming, "exported", [
         to_reset_name_value(entity, child) for child in children])
-    typeAliasResetState = elm.TypeAliasAssign(["Reset", "State"], entity.naming+["State"], "exported", [
-        to_reset_state_name_value(entity, child) for child in children])
+    typeAliasAssigments = [typeAliasReset]
+
+    #Editable
+    if not "Read only" in entity.traits:
+        typeAliasState = elm.TypeAlias(entity.naming+["State"], "exported", [
+            to_state_name_type(entity, child) for child in children])
+        typeAliases.append(typeAliasState)
+        typeAliasResetState = elm.TypeAliasAssign(["Reset", "State"], entity.naming+["State"], "exported", [
+            to_reset_state_name_value(entity, child) for child in children])
+        typeAliasAssigments.append(typeAliasResetState)
     elmTypes = [to_elm_type_state(entity, child) for child in children]
     elmSource = elm.ElmSource(
-        entity.naming, "Flarebyte.Oak.Domain", imported, [typeAlias, typeAliasState], elmTypes, [typeAliasReset, typeAliasResetState], [])
+        entity.naming, "Flarebyte.Oak.Domain", imported, typeAliases, elmTypes, typeAliasAssigments, [])
     elm.write_elm_file(elmSource)
     # generate other class models
     for child in children:

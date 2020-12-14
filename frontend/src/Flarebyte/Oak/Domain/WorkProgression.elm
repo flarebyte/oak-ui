@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.WorkProgression exposing (WorkProgression, WorkProgressionState, reset, resetState)
+module Flarebyte.Oak.Domain.WorkProgression exposing (WorkProgression, reset)
 
 
 
@@ -19,22 +19,9 @@ type alias WorkProgression =
    workIdentifier: String
     ,dateModified: String
   }
-
-type alias WorkProgressionState = 
-  {
-   workIdentifier: StateWorkProgressionWorkIdentifier
-    ,dateModified: StateWorkProgressionDateModified
-  }
 reset: WorkProgression 
 reset = 
   {
    workIdentifier= ""
     ,dateModified= "2000-01-01"
-  }
-
-resetState: WorkProgressionState 
-resetState = 
-  {
-   workIdentifier= StateStartWorkProgressionWorkIdentifier
-    ,dateModified= StateStartWorkProgressionDateModified
   }
