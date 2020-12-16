@@ -53,7 +53,7 @@ validate value=
 
 isStateAcceptable: StatisticalWebPageState -> Bool
 isStateAcceptable state=
-  state.statisticalMetadataList == StateAcceptableStatisticalWebPageStatisticalMetadataList
+  (state.statisticalMetadataList == StateAcceptableStatisticalWebPageStatisticalMetadataList || state.statisticalMetadataList == StateStartStatisticalWebPageStatisticalMetadataList)
 
 
 addValidation: StatisticalWebPageAndState -> StatisticalWebPageAndState

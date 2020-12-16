@@ -76,7 +76,7 @@ validate value=
 isStateAcceptable: NodeState -> Bool
 isStateAcceptable state=
   state.name == StateAcceptableNodeName
-    && state.attributeList == StateAcceptableNodeAttributeList
+    && (state.attributeList == StateAcceptableNodeAttributeList || state.attributeList == StateStartNodeAttributeList)
 
 
 addValidation: NodeAndState -> NodeAndState

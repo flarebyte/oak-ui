@@ -144,12 +144,12 @@ validate value=
 
 isStateAcceptable: GraphEditorWebPageState -> Bool
 isStateAcceptable state=
-  state.statisticalMetadataList == StateAcceptableGraphEditorWebPageStatisticalMetadataList
+  (state.statisticalMetadataList == StateAcceptableGraphEditorWebPageStatisticalMetadataList || state.statisticalMetadataList == StateStartGraphEditorWebPageStatisticalMetadataList)
     && state.graph == StateAcceptableGraphEditorWebPageGraph
     && state.webPageState == StateAcceptableGraphEditorWebPageWebPageState
     && state.optionalErrorMessage == StateAcceptableGraphEditorWebPageOptionalErrorMessage
-    && state.tagSet == StateAcceptableGraphEditorWebPageTagSet
-    && state.unitCodeList == StateAcceptableGraphEditorWebPageUnitCodeList
+    && (state.tagSet == StateAcceptableGraphEditorWebPageTagSet || state.tagSet == StateStartGraphEditorWebPageTagSet)
+    && (state.unitCodeList == StateAcceptableGraphEditorWebPageUnitCodeList || state.unitCodeList == StateStartGraphEditorWebPageUnitCodeList)
 
 
 addValidation: GraphEditorWebPageAndState -> GraphEditorWebPageAndState

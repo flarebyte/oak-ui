@@ -120,7 +120,7 @@ validate value=
 isStateAcceptable: EdgeState -> Bool
 isStateAcceptable state=
   state.name == StateAcceptableEdgeName
-    && state.attributeList == StateAcceptableEdgeAttributeList
+    && (state.attributeList == StateAcceptableEdgeAttributeList || state.attributeList == StateStartEdgeAttributeList)
     && state.fromNode == StateAcceptableEdgeFromNode
     && state.toNode == StateAcceptableEdgeToNode
 

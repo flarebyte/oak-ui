@@ -99,9 +99,9 @@ validate value=
 
 isStateAcceptable: GraphState -> Bool
 isStateAcceptable state=
-  state.nodeList == StateAcceptableGraphNodeList
-    && state.edgeList == StateAcceptableGraphEdgeList
-    && state.attributeMetadataList == StateAcceptableGraphAttributeMetadataList
+  (state.nodeList == StateAcceptableGraphNodeList || state.nodeList == StateStartGraphNodeList)
+    && (state.edgeList == StateAcceptableGraphEdgeList || state.edgeList == StateStartGraphEdgeList)
+    && (state.attributeMetadataList == StateAcceptableGraphAttributeMetadataList || state.attributeMetadataList == StateStartGraphAttributeMetadataList)
 
 
 addValidation: GraphAndState -> GraphAndState

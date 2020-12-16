@@ -143,9 +143,9 @@ isStateAcceptable: AttributeMetadataState -> Bool
 isStateAcceptable state=
   state.name == StateAcceptableAttributeMetadataName
     && state.description == StateAcceptableAttributeMetadataDescription
-    && state.alternateDescriptionList == StateAcceptableAttributeMetadataAlternateDescriptionList
+    && (state.alternateDescriptionList == StateAcceptableAttributeMetadataAlternateDescriptionList || state.alternateDescriptionList == StateStartAttributeMetadataAlternateDescriptionList)
     && state.unitText == StateAcceptableAttributeMetadataUnitText
-    && state.tagSet == StateAcceptableAttributeMetadataTagSet
+    && (state.tagSet == StateAcceptableAttributeMetadataTagSet || state.tagSet == StateStartAttributeMetadataTagSet)
 
 
 addValidation: AttributeMetadataAndState -> AttributeMetadataAndState

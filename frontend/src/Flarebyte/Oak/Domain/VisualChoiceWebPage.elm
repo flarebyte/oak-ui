@@ -76,7 +76,7 @@ validate value=
 
 isStateAcceptable: VisualChoiceWebPageState -> Bool
 isStateAcceptable state=
-  state.mediaObjectList == StateAcceptableVisualChoiceWebPageMediaObjectList
+  (state.mediaObjectList == StateAcceptableVisualChoiceWebPageMediaObjectList || state.mediaObjectList == StateStartVisualChoiceWebPageMediaObjectList)
     && state.webPageState == StateAcceptableVisualChoiceWebPageWebPageState
     && state.workProgression == StateAcceptableVisualChoiceWebPageWorkProgression
 

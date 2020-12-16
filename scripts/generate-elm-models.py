@@ -104,14 +104,14 @@ def to_elm_type_default(entity: acquire.Entity) -> str:
 def to_elm_type_state(parent: acquire.Entity, entity: acquire.Entity) -> elm.ElmType:
     if len(entity.traits) == 0:
         raise Exception(f"Expected trait for {entity.name}")
-    
+
     state_main = ["State"]+parent.naming+entity.naming
     state_start = elm.to_type_alias_name(
-                ["State", "Start"]+parent.naming+entity.naming)
+        ["State", "Start"]+parent.naming+entity.naming)
     state_acceptable = elm.to_type_alias_name(
-                ["State", "Acceptable"]+parent.naming+entity.naming)
+        ["State", "Acceptable"]+parent.naming+entity.naming)
     state_too_long = elm.to_type_alias_name(
-                ["State", "TooLong"]+parent.naming+entity.naming)
+        ["State", "TooLong"]+parent.naming+entity.naming)
 
     if "Set" in entity.traits:
         return elm.ElmType(state_main, "", [
@@ -134,8 +134,8 @@ def to_elm_type_state(parent: acquire.Entity, entity: acquire.Entity) -> elm.Elm
             state_too_long
         ])
     return elm.ElmType(state_main, "", [
-            state_start,
-            state_acceptable
+        state_start,
+        state_acceptable
     ])
 
 
@@ -180,6 +180,7 @@ def to_string_validator_fn(suffix_naming: List[str], max: int) -> elm.ElmFunctio
              ]
     return elm.ElmFunction(["validate"]+suffix_naming, "", ["String", elm.to_type_alias_name(["State"]+suffix_naming)], ["value"], lines)
 
+
 def to_string_list_validator_fn(suffix_naming: List[str], max: int) -> elm.ElmFunction:
     lines = ["    if List.isEmpty values then",
              f'        {elm.to_type_alias_name(["State", "Start"]+ suffix_naming)}',
@@ -189,6 +190,7 @@ def to_string_list_validator_fn(suffix_naming: List[str], max: int) -> elm.ElmFu
              f'        {elm.to_type_alias_name(["State", "Acceptable"]+ suffix_naming)}'
              ]
     return elm.ElmFunction(["validate"]+suffix_naming, "", ["List String", elm.to_type_alias_name(["State"]+suffix_naming)], ["values"], lines)
+
 
 def to_string_set_validator_fn(suffix_naming: List[str], max: int) -> elm.ElmFunction:
     lines = ["    if Set.isEmpty values then",
@@ -200,6 +202,7 @@ def to_string_set_validator_fn(suffix_naming: List[str], max: int) -> elm.ElmFun
              ]
     return elm.ElmFunction(["validate"]+suffix_naming, "", ["Set String", elm.to_type_alias_name(["State"]+suffix_naming)], ["values"], lines)
 
+
 def to_string_class_validator_fn(suffix_naming: List[str], child_class:  str, max: int) -> elm.ElmFunction:
     lines = ["    if List.isEmpty values then",
              f'        {elm.to_type_alias_name(["State", "Start"]+ suffix_naming)}',
@@ -210,21 +213,42 @@ def to_string_class_validator_fn(suffix_naming: List[str], child_class:  str, ma
              ]
     return elm.ElmFunction(["validate"]+suffix_naming, "", [child_class, elm.to_type_alias_name(["State"]+suffix_naming)], ["values"], lines)
 
-def sep_if_not_first(i: int, sep=", ")->str:
+
+def sep_if_not_first(i: int, sep=", ") -> str:
     return "" if i == 0 else sep
 
+
 def to_type_alias_validator_fn(entity: acquire.Entity, children: acquire.Entity) -> elm.ElmFunction:
-    statements = [f'{sep_if_not_first(i)}{elm.to_attr_name(child.naming)} = {elm.to_attr_name(["Validate"]+entity.naming+child.naming)} value.{elm.to_attr_name(child.naming)}' for i, child in enumerate(children)]
+    statements = [
+        f'{sep_if_not_first(i)}{elm.to_attr_name(child.naming)} = {elm.to_attr_name(["Validate"]+entity.naming+child.naming)} value.{elm.to_attr_name(child.naming)}' for i, child in enumerate(children)]
     lines = ["  {"]+statements+["}"]
     return elm.ElmFunction(["validate"], "", [elm.to_type_alias_name(entity.naming), elm.to_type_alias_name(entity.naming+["State"])], ["value"], lines)
+
 
 def to_add_validation_fn(entity: acquire.Entity) -> elm.ElmFunction:
     lines = ["  { value | state = validate value.value}"]
     return elm.ElmFunction(["Add", "Validation"], "", [elm.to_type_alias_name(entity.naming+["And", "State"]), elm.to_type_alias_name(entity.naming+["And", "State"])], ["value"], lines)
 
-def to_is_state_acceptable_fn(entity: acquire.Entity, children: acquire.Entity) -> elm.ElmFunction:
-    statements = [f'  {sep_if_not_first(i, "&& ")}state.{elm.to_attr_name(child.naming)} == {elm.to_type_alias_name(["State", "Acceptable"]+entity.naming+child.naming)}' for i, child in enumerate(children)]
-    lines = statements
+
+def eq_enum(fieldname: str, suffix_naming: List[str], alt: List[List[str]]) -> str:
+    eqls = [
+        f'{fieldname} == {elm.to_type_alias_name(a+suffix_naming)}' for a in alt]
+    if len(eqls) == 1:
+        return eqls[0]
+    else:
+        return "("+" || ".join(eqls)+")"
+
+
+def is_acceptable(child: acquire.Entity) -> List[str]:
+    if "List" in child.traits or "Set" in child.traits:
+        return [["State", "Acceptable"], ["State", "Start"]]
+    else:
+        return [["State", "Acceptable"]]
+
+
+def to_is_state_acceptable_fn(entity: acquire.Entity, children: List[acquire.Entity]) -> elm.ElmFunction:
+    lines = [
+        f'  {sep_if_not_first(i, "&& ")}{eq_enum("state."+elm.to_attr_name(child.naming),entity.naming+child.naming, is_acceptable(child) )}' for i, child in enumerate(children)]
     return elm.ElmFunction(["Is", "State", "Acceptable"], "", [elm.to_type_alias_name(entity.naming+["State"]), "Bool"], ["state"], lines)
 
 
@@ -254,22 +278,25 @@ def generate_class_model(name: str):
         typeAliasResetState = elm.TypeAliasAssign(["Reset", "State"], entity.naming+["State"], "exported", [
             to_reset_state_name_value(entity, child) for child in children])
         typeAliasAssigments.append(typeAliasResetState)
-        elmTypes +=  [to_elm_type_state(entity, child) for child in children]
+        elmTypes += [to_elm_type_state(entity, child) for child in children]
         # Combined type alias
         typeAliasAndState = elm.TypeAlias(entity.naming+["And", "State"], "exported", [
             (["value"], typeAlias.get_name()), (["state"], typeAliasState.get_name())])
         typeAliases.append(typeAliasAndState)
         # Validators
-        elmFuntions +=  [to_string_validator_fn(entity.naming+child.naming, 50) for child in children if to_elm_type(child) == "String"]
-        elmFuntions +=  [to_string_list_validator_fn(entity.naming+child.naming, 50) for child in children if to_elm_type(child) == "List String"]
-        elmFuntions +=  [to_string_set_validator_fn(entity.naming+child.naming, 50) for child in children if to_elm_type(child) == "Set String"]
-        elmFuntions +=  [to_string_class_validator_fn(entity.naming+child.naming, to_elm_type(child), 50) for child in children if to_elm_type(child).startswith("List ") and not to_elm_type(child).endswith(" String")]
+        elmFuntions += [to_string_validator_fn(entity.naming+child.naming, 50)
+                        for child in children if to_elm_type(child) == "String"]
+        elmFuntions += [to_string_list_validator_fn(entity.naming+child.naming, 50)
+                        for child in children if to_elm_type(child) == "List String"]
+        elmFuntions += [to_string_set_validator_fn(entity.naming+child.naming, 50)
+                        for child in children if to_elm_type(child) == "Set String"]
+        elmFuntions += [to_string_class_validator_fn(entity.naming+child.naming, to_elm_type(
+            child), 50) for child in children if to_elm_type(child).startswith("List ") and not to_elm_type(child).endswith(" String")]
         # validate all
         elmFuntions.append(to_type_alias_validator_fn(entity, children))
         elmFuntions.append(to_is_state_acceptable_fn(entity, children))
         elmFuntions.append(to_add_validation_fn(entity))
 
-        
     elmSource = elm.ElmSource(
         entity.naming, "Flarebyte.Oak.Domain", imported, typeAliases, elmTypes, typeAliasAssigments, elmFuntions)
     elm.write_elm_file(elmSource)

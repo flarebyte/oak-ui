@@ -98,8 +98,8 @@ validate value=
 isStateAcceptable: AttributeState -> Bool
 isStateAcceptable state=
   state.value == StateAcceptableAttributeValue
-    && state.optionalValueList == StateAcceptableAttributeOptionalValueList
-    && state.tagSet == StateAcceptableAttributeTagSet
+    && (state.optionalValueList == StateAcceptableAttributeOptionalValueList || state.optionalValueList == StateStartAttributeOptionalValueList)
+    && (state.tagSet == StateAcceptableAttributeTagSet || state.tagSet == StateStartAttributeTagSet)
 
 
 addValidation: AttributeAndState -> AttributeAndState

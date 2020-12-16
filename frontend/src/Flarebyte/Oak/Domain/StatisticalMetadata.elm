@@ -121,8 +121,8 @@ isStateAcceptable: StatisticalMetadataState -> Bool
 isStateAcceptable state=
   state.name == StateAcceptableStatisticalMetadataName
     && state.value == StateAcceptableStatisticalMetadataValue
-    && state.optionalValueList == StateAcceptableStatisticalMetadataOptionalValueList
-    && state.tagSet == StateAcceptableStatisticalMetadataTagSet
+    && (state.optionalValueList == StateAcceptableStatisticalMetadataOptionalValueList || state.optionalValueList == StateStartStatisticalMetadataOptionalValueList)
+    && (state.tagSet == StateAcceptableStatisticalMetadataTagSet || state.tagSet == StateStartStatisticalMetadataTagSet)
 
 
 addValidation: StatisticalMetadataAndState -> StatisticalMetadataAndState

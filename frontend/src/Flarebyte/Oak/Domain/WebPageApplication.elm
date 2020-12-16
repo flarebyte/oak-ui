@@ -197,12 +197,12 @@ isStateAcceptable state=
     && state.documentationListWebPage == StateAcceptableWebPageApplicationDocumentationListWebPage
     && state.webPageState == StateAcceptableWebPageApplicationWebPageState
     && state.visualChoiceWebPage == StateAcceptableWebPageApplicationVisualChoiceWebPage
-    && state.languageList == StateAcceptableWebPageApplicationLanguageList
+    && (state.languageList == StateAcceptableWebPageApplicationLanguageList || state.languageList == StateStartWebPageApplicationLanguageList)
     && state.language == StateAcceptableWebPageApplicationLanguage
     && state.statisticalWebPage == StateAcceptableWebPageApplicationStatisticalWebPage
     && state.workProgression == StateAcceptableWebPageApplicationWorkProgression
-    && state.tagSet == StateAcceptableWebPageApplicationTagSet
-    && state.unitCodeList == StateAcceptableWebPageApplicationUnitCodeList
+    && (state.tagSet == StateAcceptableWebPageApplicationTagSet || state.tagSet == StateStartWebPageApplicationTagSet)
+    && (state.unitCodeList == StateAcceptableWebPageApplicationUnitCodeList || state.unitCodeList == StateStartWebPageApplicationUnitCodeList)
     && state.node == StateAcceptableWebPageApplicationNode
 
 
