@@ -74,6 +74,13 @@ validate value=
   }
 
 
+isStateAcceptable: VisualChoiceWebPageState -> Bool
+isStateAcceptable state=
+  state.mediaObjectList == StateAcceptableVisualChoiceWebPageMediaObjectList
+    && state.webPageState == StateAcceptableVisualChoiceWebPageWebPageState
+    && state.workProgression == StateAcceptableVisualChoiceWebPageWorkProgression
+
+
 addValidation: VisualChoiceWebPageAndState -> VisualChoiceWebPageAndState
 addValidation value=
   { value | state = validate value.value}

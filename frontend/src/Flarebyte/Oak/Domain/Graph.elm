@@ -97,6 +97,13 @@ validate value=
   }
 
 
+isStateAcceptable: GraphState -> Bool
+isStateAcceptable state=
+  state.nodeList == StateAcceptableGraphNodeList
+    && state.edgeList == StateAcceptableGraphEdgeList
+    && state.attributeMetadataList == StateAcceptableGraphAttributeMetadataList
+
+
 addValidation: GraphAndState -> GraphAndState
 addValidation value=
   { value | state = validate value.value}

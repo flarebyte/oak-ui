@@ -150,6 +150,16 @@ validate value=
   }
 
 
+isStateAcceptable: MediaObjectState -> Bool
+isStateAcceptable state=
+  state.name == StateAcceptableMediaObjectName
+    && state.description == StateAcceptableMediaObjectDescription
+    && state.abstract == StateAcceptableMediaObjectAbstract
+    && state.protectedMediaObjectURL == StateAcceptableMediaObjectProtectedMediaObjectURL
+    && state.mediaObjectDataType == StateAcceptableMediaObjectMediaObjectDataType
+    && state.robotCreatorName == StateAcceptableMediaObjectRobotCreatorName
+
+
 addValidation: MediaObjectAndState -> MediaObjectAndState
 addValidation value=
   { value | state = validate value.value}

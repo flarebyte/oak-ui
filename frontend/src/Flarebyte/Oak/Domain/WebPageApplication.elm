@@ -191,6 +191,21 @@ validate value=
   }
 
 
+isStateAcceptable: WebPageApplicationState -> Bool
+isStateAcceptable state=
+  state.graphEditorWebPage == StateAcceptableWebPageApplicationGraphEditorWebPage
+    && state.documentationListWebPage == StateAcceptableWebPageApplicationDocumentationListWebPage
+    && state.webPageState == StateAcceptableWebPageApplicationWebPageState
+    && state.visualChoiceWebPage == StateAcceptableWebPageApplicationVisualChoiceWebPage
+    && state.languageList == StateAcceptableWebPageApplicationLanguageList
+    && state.language == StateAcceptableWebPageApplicationLanguage
+    && state.statisticalWebPage == StateAcceptableWebPageApplicationStatisticalWebPage
+    && state.workProgression == StateAcceptableWebPageApplicationWorkProgression
+    && state.tagSet == StateAcceptableWebPageApplicationTagSet
+    && state.unitCodeList == StateAcceptableWebPageApplicationUnitCodeList
+    && state.node == StateAcceptableWebPageApplicationNode
+
+
 addValidation: WebPageApplicationAndState -> WebPageApplicationAndState
 addValidation value=
   { value | state = validate value.value}

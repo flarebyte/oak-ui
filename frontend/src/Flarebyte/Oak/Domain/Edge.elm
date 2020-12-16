@@ -117,6 +117,14 @@ validate value=
   }
 
 
+isStateAcceptable: EdgeState -> Bool
+isStateAcceptable state=
+  state.name == StateAcceptableEdgeName
+    && state.attributeList == StateAcceptableEdgeAttributeList
+    && state.fromNode == StateAcceptableEdgeFromNode
+    && state.toNode == StateAcceptableEdgeToNode
+
+
 addValidation: EdgeAndState -> EdgeAndState
 addValidation value=
   { value | state = validate value.value}

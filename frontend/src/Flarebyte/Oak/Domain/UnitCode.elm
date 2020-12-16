@@ -73,6 +73,12 @@ validate value=
   }
 
 
+isStateAcceptable: UnitCodeState -> Bool
+isStateAcceptable state=
+  state.name == StateAcceptableUnitCodeName
+    && state.description == StateAcceptableUnitCodeDescription
+
+
 addValidation: UnitCodeAndState -> UnitCodeAndState
 addValidation value=
   { value | state = validate value.value}

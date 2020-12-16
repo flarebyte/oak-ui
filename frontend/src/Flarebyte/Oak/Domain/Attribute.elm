@@ -95,6 +95,13 @@ validate value=
   }
 
 
+isStateAcceptable: AttributeState -> Bool
+isStateAcceptable state=
+  state.value == StateAcceptableAttributeValue
+    && state.optionalValueList == StateAcceptableAttributeOptionalValueList
+    && state.tagSet == StateAcceptableAttributeTagSet
+
+
 addValidation: AttributeAndState -> AttributeAndState
 addValidation value=
   { value | state = validate value.value}

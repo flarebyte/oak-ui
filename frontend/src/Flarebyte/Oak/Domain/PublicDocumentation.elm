@@ -84,6 +84,13 @@ validate value=
   }
 
 
+isStateAcceptable: PublicDocumentationState -> Bool
+isStateAcceptable state=
+  state.description == StateAcceptablePublicDocumentationDescription
+    && state.publicWebPage == StateAcceptablePublicDocumentationPublicWebPage
+    && state.documentationCategory == StateAcceptablePublicDocumentationDocumentationCategory
+
+
 addValidation: PublicDocumentationAndState -> PublicDocumentationAndState
 addValidation value=
   { value | state = validate value.value}

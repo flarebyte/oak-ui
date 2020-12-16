@@ -73,6 +73,12 @@ validate value=
   }
 
 
+isStateAcceptable: LanguageState -> Bool
+isStateAcceptable state=
+  state.name == StateAcceptableLanguageName
+    && state.description == StateAcceptableLanguageDescription
+
+
 addValidation: LanguageAndState -> LanguageAndState
 addValidation value=
   { value | state = validate value.value}

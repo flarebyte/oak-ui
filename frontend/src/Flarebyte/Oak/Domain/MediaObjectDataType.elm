@@ -73,6 +73,12 @@ validate value=
   }
 
 
+isStateAcceptable: MediaObjectDataTypeState -> Bool
+isStateAcceptable state=
+  state.name == StateAcceptableMediaObjectDataTypeName
+    && state.description == StateAcceptableMediaObjectDataTypeDescription
+
+
 addValidation: MediaObjectDataTypeAndState -> MediaObjectDataTypeAndState
 addValidation value=
   { value | state = validate value.value}

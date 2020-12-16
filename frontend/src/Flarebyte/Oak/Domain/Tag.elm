@@ -73,6 +73,12 @@ validate value=
   }
 
 
+isStateAcceptable: TagState -> Bool
+isStateAcceptable state=
+  state.name == StateAcceptableTagName
+    && state.description == StateAcceptableTagDescription
+
+
 addValidation: TagAndState -> TagAndState
 addValidation value=
   { value | state = validate value.value}

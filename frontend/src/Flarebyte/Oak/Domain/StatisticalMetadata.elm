@@ -117,6 +117,14 @@ validate value=
   }
 
 
+isStateAcceptable: StatisticalMetadataState -> Bool
+isStateAcceptable state=
+  state.name == StateAcceptableStatisticalMetadataName
+    && state.value == StateAcceptableStatisticalMetadataValue
+    && state.optionalValueList == StateAcceptableStatisticalMetadataOptionalValueList
+    && state.tagSet == StateAcceptableStatisticalMetadataTagSet
+
+
 addValidation: StatisticalMetadataAndState -> StatisticalMetadataAndState
 addValidation value=
   { value | state = validate value.value}

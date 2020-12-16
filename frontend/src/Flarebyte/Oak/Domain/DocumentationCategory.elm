@@ -73,6 +73,12 @@ validate value=
   }
 
 
+isStateAcceptable: DocumentationCategoryState -> Bool
+isStateAcceptable state=
+  state.name == StateAcceptableDocumentationCategoryName
+    && state.description == StateAcceptableDocumentationCategoryDescription
+
+
 addValidation: DocumentationCategoryAndState -> DocumentationCategoryAndState
 addValidation value=
   { value | state = validate value.value}

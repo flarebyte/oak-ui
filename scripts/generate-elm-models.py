@@ -222,6 +222,11 @@ def to_add_validation_fn(entity: acquire.Entity) -> elm.ElmFunction:
     lines = ["  { value | state = validate value.value}"]
     return elm.ElmFunction(["Add", "Validation"], "", [elm.to_type_alias_name(entity.naming+["And", "State"]), elm.to_type_alias_name(entity.naming+["And", "State"])], ["value"], lines)
 
+def to_is_state_acceptable_fn(entity: acquire.Entity, children: acquire.Entity) -> elm.ElmFunction:
+    statements = [f'  {sep_if_not_first(i, "&& ")}state.{elm.to_attr_name(child.naming)} == {elm.to_type_alias_name(["State", "Acceptable"]+entity.naming+child.naming)}' for i, child in enumerate(children)]
+    lines = statements
+    return elm.ElmFunction(["Is", "State", "Acceptable"], "", [elm.to_type_alias_name(entity.naming+["State"]), "Bool"], ["state"], lines)
+
 
 def generate_class_model(name: str):
     entity = entities_dict[name]
@@ -261,6 +266,7 @@ def generate_class_model(name: str):
         elmFuntions +=  [to_string_class_validator_fn(entity.naming+child.naming, to_elm_type(child), 50) for child in children if to_elm_type(child).startswith("List ") and not to_elm_type(child).endswith(" String")]
         # validate all
         elmFuntions.append(to_type_alias_validator_fn(entity, children))
+        elmFuntions.append(to_is_state_acceptable_fn(entity, children))
         elmFuntions.append(to_add_validation_fn(entity))
 
         

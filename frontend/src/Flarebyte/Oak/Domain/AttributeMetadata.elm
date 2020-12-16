@@ -139,6 +139,15 @@ validate value=
   }
 
 
+isStateAcceptable: AttributeMetadataState -> Bool
+isStateAcceptable state=
+  state.name == StateAcceptableAttributeMetadataName
+    && state.description == StateAcceptableAttributeMetadataDescription
+    && state.alternateDescriptionList == StateAcceptableAttributeMetadataAlternateDescriptionList
+    && state.unitText == StateAcceptableAttributeMetadataUnitText
+    && state.tagSet == StateAcceptableAttributeMetadataTagSet
+
+
 addValidation: AttributeMetadataAndState -> AttributeMetadataAndState
 addValidation value=
   { value | state = validate value.value}

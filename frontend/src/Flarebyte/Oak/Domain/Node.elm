@@ -73,6 +73,12 @@ validate value=
   }
 
 
+isStateAcceptable: NodeState -> Bool
+isStateAcceptable state=
+  state.name == StateAcceptableNodeName
+    && state.attributeList == StateAcceptableNodeAttributeList
+
+
 addValidation: NodeAndState -> NodeAndState
 addValidation value=
   { value | state = validate value.value}
