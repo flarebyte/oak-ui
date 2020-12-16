@@ -154,6 +154,26 @@ validateWebPageApplicationTagSet values=
           StateAcceptableWebPageApplicationTagSet
 
 
+validateWebPageApplicationLanguageList: List Language -> StateWebPageApplicationLanguageList
+validateWebPageApplicationLanguageList values=
+    if List.isEmpty values then
+          StateStartWebPageApplicationLanguageList
+      else if List.length values > 50 then
+         StateTooLongWebPageApplicationLanguageList
+      else
+          StateAcceptableWebPageApplicationLanguageList
+
+
+validateWebPageApplicationUnitCodeList: List UnitCode -> StateWebPageApplicationUnitCodeList
+validateWebPageApplicationUnitCodeList values=
+    if List.isEmpty values then
+          StateStartWebPageApplicationUnitCodeList
+      else if List.length values > 50 then
+         StateTooLongWebPageApplicationUnitCodeList
+      else
+          StateAcceptableWebPageApplicationUnitCodeList
+
+
 validate: WebPageApplication -> WebPageApplicationState
 validate value=
   {

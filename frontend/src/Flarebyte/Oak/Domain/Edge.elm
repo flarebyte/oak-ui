@@ -97,6 +97,16 @@ validateEdgeToNode value=
           StateAcceptableEdgeToNode
 
 
+validateEdgeAttributeList: List Attribute -> StateEdgeAttributeList
+validateEdgeAttributeList values=
+    if List.isEmpty values then
+          StateStartEdgeAttributeList
+      else if List.length values > 50 then
+         StateTooLongEdgeAttributeList
+      else
+          StateAcceptableEdgeAttributeList
+
+
 validate: Edge -> EdgeState
 validate value=
   {

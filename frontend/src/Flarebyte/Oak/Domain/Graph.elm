@@ -58,6 +58,36 @@ resetState =
     ,edgeList= StateStartGraphEdgeList
     ,attributeMetadataList= StateStartGraphAttributeMetadataList
   }
+validateGraphNodeList: List Node -> StateGraphNodeList
+validateGraphNodeList values=
+    if List.isEmpty values then
+          StateStartGraphNodeList
+      else if List.length values > 50 then
+         StateTooLongGraphNodeList
+      else
+          StateAcceptableGraphNodeList
+
+
+validateGraphEdgeList: List Edge -> StateGraphEdgeList
+validateGraphEdgeList values=
+    if List.isEmpty values then
+          StateStartGraphEdgeList
+      else if List.length values > 50 then
+         StateTooLongGraphEdgeList
+      else
+          StateAcceptableGraphEdgeList
+
+
+validateGraphAttributeMetadataList: List AttributeMetadata -> StateGraphAttributeMetadataList
+validateGraphAttributeMetadataList values=
+    if List.isEmpty values then
+          StateStartGraphAttributeMetadataList
+      else if List.length values > 50 then
+         StateTooLongGraphAttributeMetadataList
+      else
+          StateAcceptableGraphAttributeMetadataList
+
+
 validate: Graph -> GraphState
 validate value=
   {

@@ -200,6 +200,16 @@ def to_string_set_validator_fn(suffix_naming: List[str], max: int) -> elm.ElmFun
              ]
     return elm.ElmFunction(["validate"]+suffix_naming, "", ["Set String", elm.to_type_alias_name(["State"]+suffix_naming)], ["values"], lines)
 
+def to_string_class_validator_fn(suffix_naming: List[str], child_class:  str, max: int) -> elm.ElmFunction:
+    lines = ["    if List.isEmpty values then",
+             f'        {elm.to_type_alias_name(["State", "Start"]+ suffix_naming)}',
+             f'    else if List.length values > {max} then',
+             f'       {elm.to_type_alias_name(["State", "Too", "Long"]+ suffix_naming)}',
+             "    else",
+             f'        {elm.to_type_alias_name(["State", "Acceptable"]+ suffix_naming)}'
+             ]
+    return elm.ElmFunction(["validate"]+suffix_naming, "", [child_class, elm.to_type_alias_name(["State"]+suffix_naming)], ["values"], lines)
+
 def sep_if_not_first(i: int, sep=", ")->str:
     return "" if i == 0 else sep
 
@@ -248,6 +258,7 @@ def generate_class_model(name: str):
         elmFuntions +=  [to_string_validator_fn(entity.naming+child.naming, 50) for child in children if to_elm_type(child) == "String"]
         elmFuntions +=  [to_string_list_validator_fn(entity.naming+child.naming, 50) for child in children if to_elm_type(child) == "List String"]
         elmFuntions +=  [to_string_set_validator_fn(entity.naming+child.naming, 50) for child in children if to_elm_type(child) == "Set String"]
+        elmFuntions +=  [to_string_class_validator_fn(entity.naming+child.naming, to_elm_type(child), 50) for child in children if to_elm_type(child).startswith("List ") and not to_elm_type(child).endswith(" String")]
         # validate all
         elmFuntions.append(to_type_alias_validator_fn(entity, children))
         elmFuntions.append(to_add_validation_fn(entity))

@@ -55,6 +55,16 @@ resetState =
     ,webPageState= StateStartVisualChoiceWebPageWebPageState
     ,workProgression= StateStartVisualChoiceWebPageWorkProgression
   }
+validateVisualChoiceWebPageMediaObjectList: List MediaObject -> StateVisualChoiceWebPageMediaObjectList
+validateVisualChoiceWebPageMediaObjectList values=
+    if List.isEmpty values then
+          StateStartVisualChoiceWebPageMediaObjectList
+      else if List.length values > 50 then
+         StateTooLongVisualChoiceWebPageMediaObjectList
+      else
+          StateAcceptableVisualChoiceWebPageMediaObjectList
+
+
 validate: VisualChoiceWebPage -> VisualChoiceWebPageState
 validate value=
   {

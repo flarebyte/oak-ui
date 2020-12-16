@@ -55,6 +55,16 @@ validateNodeName value=
           StateAcceptableNodeName
 
 
+validateNodeAttributeList: List Attribute -> StateNodeAttributeList
+validateNodeAttributeList values=
+    if List.isEmpty values then
+          StateStartNodeAttributeList
+      else if List.length values > 50 then
+         StateTooLongNodeAttributeList
+      else
+          StateAcceptableNodeAttributeList
+
+
 validate: Node -> NodeState
 validate value=
   {

@@ -34,6 +34,16 @@ resetState =
   {
    statisticalMetadataList= StateStartStatisticalWebPageStatisticalMetadataList
   }
+validateStatisticalWebPageStatisticalMetadataList: List StatisticalMetadata -> StateStatisticalWebPageStatisticalMetadataList
+validateStatisticalWebPageStatisticalMetadataList values=
+    if List.isEmpty values then
+          StateStartStatisticalWebPageStatisticalMetadataList
+      else if List.length values > 50 then
+         StateTooLongStatisticalWebPageStatisticalMetadataList
+      else
+          StateAcceptableStatisticalWebPageStatisticalMetadataList
+
+
 validate: StatisticalWebPage -> StatisticalWebPageState
 validate value=
   {

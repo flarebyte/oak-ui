@@ -110,6 +110,26 @@ validateGraphEditorWebPageTagSet values=
           StateAcceptableGraphEditorWebPageTagSet
 
 
+validateGraphEditorWebPageStatisticalMetadataList: List StatisticalMetadata -> StateGraphEditorWebPageStatisticalMetadataList
+validateGraphEditorWebPageStatisticalMetadataList values=
+    if List.isEmpty values then
+          StateStartGraphEditorWebPageStatisticalMetadataList
+      else if List.length values > 50 then
+         StateTooLongGraphEditorWebPageStatisticalMetadataList
+      else
+          StateAcceptableGraphEditorWebPageStatisticalMetadataList
+
+
+validateGraphEditorWebPageUnitCodeList: List UnitCode -> StateGraphEditorWebPageUnitCodeList
+validateGraphEditorWebPageUnitCodeList values=
+    if List.isEmpty values then
+          StateStartGraphEditorWebPageUnitCodeList
+      else if List.length values > 50 then
+         StateTooLongGraphEditorWebPageUnitCodeList
+      else
+          StateAcceptableGraphEditorWebPageUnitCodeList
+
+
 validate: GraphEditorWebPage -> GraphEditorWebPageState
 validate value=
   {
