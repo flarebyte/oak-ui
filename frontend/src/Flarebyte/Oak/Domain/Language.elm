@@ -63,3 +63,11 @@ validateLanguageDescription value=
          StateTooLongLanguageDescription
       else
           StateAcceptableLanguageDescription
+
+
+validate: Language -> LanguageState
+validate value=
+  {
+  name = validateLanguageName value.name
+  , description = validateLanguageDescription value.description
+  }

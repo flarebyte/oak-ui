@@ -95,3 +95,13 @@ validateStatisticalMetadataOptionalValueList values=
          StateTooLongStatisticalMetadataOptionalValueList
       else
           StateAcceptableStatisticalMetadataOptionalValueList
+
+
+validate: StatisticalMetadata -> StatisticalMetadataState
+validate value=
+  {
+  name = validateStatisticalMetadataName value.name
+  , value = validateStatisticalMetadataValue value.value
+  , optionalValueList = validateStatisticalMetadataOptionalValueList value.optionalValueList
+  , tagSet = validateStatisticalMetadataTagSet value.tagSet
+  }

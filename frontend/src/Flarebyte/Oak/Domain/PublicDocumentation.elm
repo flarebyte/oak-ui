@@ -73,3 +73,12 @@ validatePublicDocumentationPublicWebPage value=
          StateTooLongPublicDocumentationPublicWebPage
       else
           StateAcceptablePublicDocumentationPublicWebPage
+
+
+validate: PublicDocumentation -> PublicDocumentationState
+validate value=
+  {
+  description = validatePublicDocumentationDescription value.description
+  , publicWebPage = validatePublicDocumentationPublicWebPage value.publicWebPage
+  , documentationCategory = validatePublicDocumentationDocumentationCategory value.documentationCategory
+  }

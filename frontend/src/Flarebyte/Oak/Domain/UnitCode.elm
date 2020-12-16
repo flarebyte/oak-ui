@@ -63,3 +63,11 @@ validateUnitCodeDescription value=
          StateTooLongUnitCodeDescription
       else
           StateAcceptableUnitCodeDescription
+
+
+validate: UnitCode -> UnitCodeState
+validate value=
+  {
+  name = validateUnitCodeName value.name
+  , description = validateUnitCodeDescription value.description
+  }

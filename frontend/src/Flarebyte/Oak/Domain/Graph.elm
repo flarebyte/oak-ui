@@ -55,3 +55,10 @@ resetState =
     ,edgeList= StateStartGraphEdgeList
     ,attributeMetadataList= StateStartGraphAttributeMetadataList
   }
+validate: Graph -> GraphState
+validate value=
+  {
+  nodeList = validateGraphNodeList value.nodeList
+  , edgeList = validateGraphEdgeList value.edgeList
+  , attributeMetadataList = validateGraphAttributeMetadataList value.attributeMetadataList
+  }

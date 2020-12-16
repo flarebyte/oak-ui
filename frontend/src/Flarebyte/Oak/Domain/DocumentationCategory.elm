@@ -63,3 +63,11 @@ validateDocumentationCategoryDescription value=
          StateTooLongDocumentationCategoryDescription
       else
           StateAcceptableDocumentationCategoryDescription
+
+
+validate: DocumentationCategory -> DocumentationCategoryState
+validate value=
+  {
+  name = validateDocumentationCategoryName value.name
+  , description = validateDocumentationCategoryDescription value.description
+  }

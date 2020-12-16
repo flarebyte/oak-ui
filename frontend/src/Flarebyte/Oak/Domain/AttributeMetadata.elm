@@ -116,3 +116,14 @@ validateAttributeMetadataAlternateDescriptionList values=
          StateTooLongAttributeMetadataAlternateDescriptionList
       else
           StateAcceptableAttributeMetadataAlternateDescriptionList
+
+
+validate: AttributeMetadata -> AttributeMetadataState
+validate value=
+  {
+  name = validateAttributeMetadataName value.name
+  , description = validateAttributeMetadataDescription value.description
+  , alternateDescriptionList = validateAttributeMetadataAlternateDescriptionList value.alternateDescriptionList
+  , unitText = validateAttributeMetadataUnitText value.unitText
+  , tagSet = validateAttributeMetadataTagSet value.tagSet
+  }

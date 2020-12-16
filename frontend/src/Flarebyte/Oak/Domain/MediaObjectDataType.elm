@@ -63,3 +63,11 @@ validateMediaObjectDataTypeDescription value=
          StateTooLongMediaObjectDataTypeDescription
       else
           StateAcceptableMediaObjectDataTypeDescription
+
+
+validate: MediaObjectDataType -> MediaObjectDataTypeState
+validate value=
+  {
+  name = validateMediaObjectDataTypeName value.name
+  , description = validateMediaObjectDataTypeDescription value.description
+  }

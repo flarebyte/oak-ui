@@ -94,3 +94,13 @@ validateEdgeToNode value=
          StateTooLongEdgeToNode
       else
           StateAcceptableEdgeToNode
+
+
+validate: Edge -> EdgeState
+validate value=
+  {
+  name = validateEdgeName value.name
+  , attributeList = validateEdgeAttributeList value.attributeList
+  , fromNode = validateEdgeFromNode value.fromNode
+  , toNode = validateEdgeToNode value.toNode
+  }

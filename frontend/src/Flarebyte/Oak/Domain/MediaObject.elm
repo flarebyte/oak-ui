@@ -136,3 +136,15 @@ validateMediaObjectRobotCreatorName value=
          StateTooLongMediaObjectRobotCreatorName
       else
           StateAcceptableMediaObjectRobotCreatorName
+
+
+validate: MediaObject -> MediaObjectState
+validate value=
+  {
+  name = validateMediaObjectName value.name
+  , description = validateMediaObjectDescription value.description
+  , abstract = validateMediaObjectAbstract value.abstract
+  , protectedMediaObjectURL = validateMediaObjectProtectedMediaObjectURL value.protectedMediaObjectURL
+  , mediaObjectDataType = validateMediaObjectMediaObjectDataType value.mediaObjectDataType
+  , robotCreatorName = validateMediaObjectRobotCreatorName value.robotCreatorName
+  }

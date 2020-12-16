@@ -96,3 +96,15 @@ validateGraphEditorWebPageOptionalErrorMessage value=
          StateTooLongGraphEditorWebPageOptionalErrorMessage
       else
           StateAcceptableGraphEditorWebPageOptionalErrorMessage
+
+
+validate: GraphEditorWebPage -> GraphEditorWebPageState
+validate value=
+  {
+  statisticalMetadataList = validateGraphEditorWebPageStatisticalMetadataList value.statisticalMetadataList
+  , graph = validateGraphEditorWebPageGraph value.graph
+  , webPageState = validateGraphEditorWebPageWebPageState value.webPageState
+  , optionalErrorMessage = validateGraphEditorWebPageOptionalErrorMessage value.optionalErrorMessage
+  , tagSet = validateGraphEditorWebPageTagSet value.tagSet
+  , unitCodeList = validateGraphEditorWebPageUnitCodeList value.unitCodeList
+  }

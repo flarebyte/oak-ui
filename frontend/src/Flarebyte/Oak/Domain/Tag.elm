@@ -63,3 +63,11 @@ validateTagDescription value=
          StateTooLongTagDescription
       else
           StateAcceptableTagDescription
+
+
+validate: Tag -> TagState
+validate value=
+  {
+  name = validateTagName value.name
+  , description = validateTagDescription value.description
+  }

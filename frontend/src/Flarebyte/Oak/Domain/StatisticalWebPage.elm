@@ -33,3 +33,8 @@ resetState =
   {
    statisticalMetadataList= StateStartStatisticalWebPageStatisticalMetadataList
   }
+validate: StatisticalWebPage -> StatisticalWebPageState
+validate value=
+  {
+  statisticalMetadataList = validateStatisticalWebPageStatisticalMetadataList value.statisticalMetadataList
+  }

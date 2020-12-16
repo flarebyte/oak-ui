@@ -74,3 +74,12 @@ validateAttributeOptionalValueList values=
          StateTooLongAttributeOptionalValueList
       else
           StateAcceptableAttributeOptionalValueList
+
+
+validate: Attribute -> AttributeState
+validate value=
+  {
+  value = validateAttributeValue value.value
+  , optionalValueList = validateAttributeOptionalValueList value.optionalValueList
+  , tagSet = validateAttributeTagSet value.tagSet
+  }

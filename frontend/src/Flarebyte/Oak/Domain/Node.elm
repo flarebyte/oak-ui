@@ -52,3 +52,11 @@ validateNodeName value=
          StateTooLongNodeName
       else
           StateAcceptableNodeName
+
+
+validate: Node -> NodeState
+validate value=
+  {
+  name = validateNodeName value.name
+  , attributeList = validateNodeAttributeList value.attributeList
+  }

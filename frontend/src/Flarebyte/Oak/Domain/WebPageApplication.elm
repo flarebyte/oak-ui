@@ -142,3 +142,18 @@ resetState =
     ,unitCodeList= StateStartWebPageApplicationUnitCodeList
     ,node= StateStartWebPageApplicationNode
   }
+validate: WebPageApplication -> WebPageApplicationState
+validate value=
+  {
+  graphEditorWebPage = validateWebPageApplicationGraphEditorWebPage value.graphEditorWebPage
+  , documentationListWebPage = validateWebPageApplicationDocumentationListWebPage value.documentationListWebPage
+  , webPageState = validateWebPageApplicationWebPageState value.webPageState
+  , visualChoiceWebPage = validateWebPageApplicationVisualChoiceWebPage value.visualChoiceWebPage
+  , languageList = validateWebPageApplicationLanguageList value.languageList
+  , language = validateWebPageApplicationLanguage value.language
+  , statisticalWebPage = validateWebPageApplicationStatisticalWebPage value.statisticalWebPage
+  , workProgression = validateWebPageApplicationWorkProgression value.workProgression
+  , tagSet = validateWebPageApplicationTagSet value.tagSet
+  , unitCodeList = validateWebPageApplicationUnitCodeList value.unitCodeList
+  , node = validateWebPageApplicationNode value.node
+  }

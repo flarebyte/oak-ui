@@ -54,3 +54,10 @@ resetState =
     ,webPageState= StateStartVisualChoiceWebPageWebPageState
     ,workProgression= StateStartVisualChoiceWebPageWorkProgression
   }
+validate: VisualChoiceWebPage -> VisualChoiceWebPageState
+validate value=
+  {
+  mediaObjectList = validateVisualChoiceWebPageMediaObjectList value.mediaObjectList
+  , webPageState = validateVisualChoiceWebPageWebPageState value.webPageState
+  , workProgression = validateVisualChoiceWebPageWorkProgression value.workProgression
+  }
