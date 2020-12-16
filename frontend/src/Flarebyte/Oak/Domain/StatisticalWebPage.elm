@@ -38,3 +38,8 @@ validate value=
   {
   statisticalMetadataList = validateStatisticalWebPageStatisticalMetadataList value.statisticalMetadataList
   }
+
+
+addValidation: StatisticalWebPageAndState -> StatisticalWebPageAndState
+addValidation value=
+{ value | state = validate value.value}

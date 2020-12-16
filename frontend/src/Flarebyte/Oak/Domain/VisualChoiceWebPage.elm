@@ -61,3 +61,8 @@ validate value=
   , webPageState = validateVisualChoiceWebPageWebPageState value.webPageState
   , workProgression = validateVisualChoiceWebPageWorkProgression value.workProgression
   }
+
+
+addValidation: VisualChoiceWebPageAndState -> VisualChoiceWebPageAndState
+addValidation value=
+{ value | state = validate value.value}

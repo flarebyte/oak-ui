@@ -71,3 +71,8 @@ validate value=
   name = validateLanguageName value.name
   , description = validateLanguageDescription value.description
   }
+
+
+addValidation: LanguageAndState -> LanguageAndState
+addValidation value=
+{ value | state = validate value.value}

@@ -83,3 +83,8 @@ validate value=
   , optionalValueList = validateAttributeOptionalValueList value.optionalValueList
   , tagSet = validateAttributeTagSet value.tagSet
   }
+
+
+addValidation: AttributeAndState -> AttributeAndState
+addValidation value=
+{ value | state = validate value.value}

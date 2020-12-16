@@ -71,3 +71,8 @@ validate value=
   name = validateMediaObjectDataTypeName value.name
   , description = validateMediaObjectDataTypeDescription value.description
   }
+
+
+addValidation: MediaObjectDataTypeAndState -> MediaObjectDataTypeAndState
+addValidation value=
+{ value | state = validate value.value}

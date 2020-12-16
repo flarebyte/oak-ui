@@ -104,3 +104,8 @@ validate value=
   , fromNode = validateEdgeFromNode value.fromNode
   , toNode = validateEdgeToNode value.toNode
   }
+
+
+addValidation: EdgeAndState -> EdgeAndState
+addValidation value=
+{ value | state = validate value.value}

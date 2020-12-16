@@ -108,3 +108,8 @@ validate value=
   , tagSet = validateGraphEditorWebPageTagSet value.tagSet
   , unitCodeList = validateGraphEditorWebPageUnitCodeList value.unitCodeList
   }
+
+
+addValidation: GraphEditorWebPageAndState -> GraphEditorWebPageAndState
+addValidation value=
+{ value | state = validate value.value}

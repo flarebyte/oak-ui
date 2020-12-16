@@ -157,3 +157,8 @@ validate value=
   , unitCodeList = validateWebPageApplicationUnitCodeList value.unitCodeList
   , node = validateWebPageApplicationNode value.node
   }
+
+
+addValidation: WebPageApplicationAndState -> WebPageApplicationAndState
+addValidation value=
+{ value | state = validate value.value}

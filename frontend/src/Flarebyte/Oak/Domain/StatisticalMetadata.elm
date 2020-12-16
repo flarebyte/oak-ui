@@ -105,3 +105,8 @@ validate value=
   , optionalValueList = validateStatisticalMetadataOptionalValueList value.optionalValueList
   , tagSet = validateStatisticalMetadataTagSet value.tagSet
   }
+
+
+addValidation: StatisticalMetadataAndState -> StatisticalMetadataAndState
+addValidation value=
+{ value | state = validate value.value}

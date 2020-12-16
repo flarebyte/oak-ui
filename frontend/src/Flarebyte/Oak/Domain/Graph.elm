@@ -62,3 +62,8 @@ validate value=
   , edgeList = validateGraphEdgeList value.edgeList
   , attributeMetadataList = validateGraphAttributeMetadataList value.attributeMetadataList
   }
+
+
+addValidation: GraphAndState -> GraphAndState
+addValidation value=
+{ value | state = validate value.value}

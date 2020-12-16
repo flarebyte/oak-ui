@@ -71,3 +71,8 @@ validate value=
   name = validateTagName value.name
   , description = validateTagDescription value.description
   }
+
+
+addValidation: TagAndState -> TagAndState
+addValidation value=
+{ value | state = validate value.value}

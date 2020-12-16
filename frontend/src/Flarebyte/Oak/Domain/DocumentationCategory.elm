@@ -71,3 +71,8 @@ validate value=
   name = validateDocumentationCategoryName value.name
   , description = validateDocumentationCategoryDescription value.description
   }
+
+
+addValidation: DocumentationCategoryAndState -> DocumentationCategoryAndState
+addValidation value=
+{ value | state = validate value.value}

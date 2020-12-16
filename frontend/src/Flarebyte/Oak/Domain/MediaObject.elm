@@ -148,3 +148,8 @@ validate value=
   , mediaObjectDataType = validateMediaObjectMediaObjectDataType value.mediaObjectDataType
   , robotCreatorName = validateMediaObjectRobotCreatorName value.robotCreatorName
   }
+
+
+addValidation: MediaObjectAndState -> MediaObjectAndState
+addValidation value=
+{ value | state = validate value.value}

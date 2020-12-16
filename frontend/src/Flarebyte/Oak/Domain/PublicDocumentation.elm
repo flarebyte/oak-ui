@@ -82,3 +82,8 @@ validate value=
   , publicWebPage = validatePublicDocumentationPublicWebPage value.publicWebPage
   , documentationCategory = validatePublicDocumentationDocumentationCategory value.documentationCategory
   }
+
+
+addValidation: PublicDocumentationAndState -> PublicDocumentationAndState
+addValidation value=
+{ value | state = validate value.value}

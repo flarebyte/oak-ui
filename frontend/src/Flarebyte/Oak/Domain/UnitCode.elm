@@ -71,3 +71,8 @@ validate value=
   name = validateUnitCodeName value.name
   , description = validateUnitCodeDescription value.description
   }
+
+
+addValidation: UnitCodeAndState -> UnitCodeAndState
+addValidation value=
+{ value | state = validate value.value}

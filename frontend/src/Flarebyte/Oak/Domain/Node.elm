@@ -60,3 +60,8 @@ validate value=
   name = validateNodeName value.name
   , attributeList = validateNodeAttributeList value.attributeList
   }
+
+
+addValidation: NodeAndState -> NodeAndState
+addValidation value=
+{ value | state = validate value.value}

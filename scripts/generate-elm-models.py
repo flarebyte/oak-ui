@@ -186,7 +186,6 @@ def to_string_set_validator_fn(suffix_naming: List[str], max: int) -> elm.ElmFun
              ]
     return elm.ElmFunction(["validate"]+suffix_naming, "", ["Set String", elm.to_type_alias_name(["State"]+suffix_naming)], ["values"], lines)
 
-
 def sep_if_not_first(i: int, sep=", ")->str:
     return "" if i == 0 else sep
 
@@ -194,6 +193,10 @@ def to_type_alias_validator_fn(entity: acquire.Entity, children: acquire.Entity)
     statements = [f'{sep_if_not_first(i)}{elm.to_attr_name(child.naming)} = {elm.to_attr_name(["Validate"]+entity.naming+child.naming)} value.{elm.to_attr_name(child.naming)}' for i, child in enumerate(children)]
     lines = ["  {"]+statements+["}"]
     return elm.ElmFunction(["validate"], "", [elm.to_type_alias_name(entity.naming), elm.to_type_alias_name(entity.naming+["State"])], ["value"], lines)
+
+def to_add_validation_fn(entity: acquire.Entity) -> elm.ElmFunction:
+    lines = ["{ value | state = validate value.value}"]
+    return elm.ElmFunction(["Add", "Validation"], "", [elm.to_type_alias_name(entity.naming+["And", "State"]), elm.to_type_alias_name(entity.naming+["And", "State"])], ["value"], lines)
 
 
 def generate_class_model(name: str):
@@ -233,6 +236,8 @@ def generate_class_model(name: str):
         elmFuntions +=  [to_string_set_validator_fn(entity.naming+child.naming, 50) for child in children if to_elm_type(child) == "Set String"]
         # validate all
         elmFuntions.append(to_type_alias_validator_fn(entity, children))
+        elmFuntions.append(to_add_validation_fn(entity))
+
         
     elmSource = elm.ElmSource(
         entity.naming, "Flarebyte.Oak.Domain", imported, typeAliases, elmTypes, typeAliasAssigments, elmFuntions)

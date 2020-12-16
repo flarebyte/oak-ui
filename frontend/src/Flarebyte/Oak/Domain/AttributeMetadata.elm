@@ -127,3 +127,8 @@ validate value=
   , unitText = validateAttributeMetadataUnitText value.unitText
   , tagSet = validateAttributeMetadataTagSet value.tagSet
   }
+
+
+addValidation: AttributeMetadataAndState -> AttributeMetadataAndState
+addValidation value=
+{ value | state = validate value.value}
