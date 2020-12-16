@@ -2,14 +2,14 @@ module Flarebyte.Oak.Domain.GraphEditorWebPage exposing (GraphEditorWebPage, Gra
 
 import Flarebyte.Oak.Domain.Graph exposing(Graph)
 import Flarebyte.Oak.Domain.StatisticalMetadata exposing(StatisticalMetadata)
-import Flarebyte.Oak.Domain.Tag exposing(Tag)
 import Flarebyte.Oak.Domain.UnitCode exposing(UnitCode)
-import Set exposing(Set)
+import Set as Set exposing(Set)
 
 type StateGraphEditorWebPageStatisticalMetadataList = 
 
   StateStartGraphEditorWebPageStatisticalMetadataList
   | StateAcceptableGraphEditorWebPageStatisticalMetadataList
+  | StateTooLongGraphEditorWebPageStatisticalMetadataList
 
 
 type StateGraphEditorWebPageGraph = 
@@ -35,12 +35,14 @@ type StateGraphEditorWebPageTagSet =
 
   StateStartGraphEditorWebPageTagSet
   | StateAcceptableGraphEditorWebPageTagSet
+  | StateTooLongGraphEditorWebPageTagSet
 
 
 type StateGraphEditorWebPageUnitCodeList = 
 
   StateStartGraphEditorWebPageUnitCodeList
   | StateAcceptableGraphEditorWebPageUnitCodeList
+  | StateTooLongGraphEditorWebPageUnitCodeList
 
 type alias GraphEditorWebPage = 
   {
@@ -48,7 +50,7 @@ type alias GraphEditorWebPage =
     ,graph: Graph
     ,webPageState: WebPageStateEnum
     ,optionalErrorMessage: String
-    ,tagSet: Set Tag
+    ,tagSet: Set String
     ,unitCodeList: List UnitCode
   }
 
@@ -98,6 +100,16 @@ validateGraphEditorWebPageOptionalErrorMessage value=
           StateAcceptableGraphEditorWebPageOptionalErrorMessage
 
 
+validateGraphEditorWebPageTagSet: Set String -> StateGraphEditorWebPageTagSet
+validateGraphEditorWebPageTagSet values=
+    if Set.isEmpty values then
+          StateStartGraphEditorWebPageTagSet
+      else if Set.size values > 50 then
+         StateTooLongGraphEditorWebPageTagSet
+      else
+          StateAcceptableGraphEditorWebPageTagSet
+
+
 validate: GraphEditorWebPage -> GraphEditorWebPageState
 validate value=
   {
@@ -112,4 +124,4 @@ validate value=
 
 addValidation: GraphEditorWebPageAndState -> GraphEditorWebPageAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}

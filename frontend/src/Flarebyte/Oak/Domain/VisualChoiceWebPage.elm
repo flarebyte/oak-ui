@@ -7,6 +7,7 @@ type StateVisualChoiceWebPageMediaObjectList =
 
   StateStartVisualChoiceWebPageMediaObjectList
   | StateAcceptableVisualChoiceWebPageMediaObjectList
+  | StateTooLongVisualChoiceWebPageMediaObjectList
 
 
 type StateVisualChoiceWebPageWebPageState = 
@@ -65,4 +66,4 @@ validate value=
 
 addValidation: VisualChoiceWebPageAndState -> VisualChoiceWebPageAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}

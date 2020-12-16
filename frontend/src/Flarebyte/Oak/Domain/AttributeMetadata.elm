@@ -1,7 +1,6 @@
 module Flarebyte.Oak.Domain.AttributeMetadata exposing (AttributeMetadata, AttributeMetadataState, AttributeMetadataAndState, reset, resetState)
 
-import Flarebyte.Oak.Domain.Tag exposing(Tag)
-import Set exposing(Set)
+import Set as Set exposing(Set)
 
 type StateAttributeMetadataName = 
 
@@ -35,6 +34,7 @@ type StateAttributeMetadataTagSet =
 
   StateStartAttributeMetadataTagSet
   | StateAcceptableAttributeMetadataTagSet
+  | StateTooLongAttributeMetadataTagSet
 
 type alias AttributeMetadata = 
   {
@@ -42,7 +42,7 @@ type alias AttributeMetadata =
     ,description: String
     ,alternateDescriptionList: List String
     ,unitText: String
-    ,tagSet: Set Tag
+    ,tagSet: Set String
   }
 
 type alias AttributeMetadataState = 
@@ -118,6 +118,16 @@ validateAttributeMetadataAlternateDescriptionList values=
           StateAcceptableAttributeMetadataAlternateDescriptionList
 
 
+validateAttributeMetadataTagSet: Set String -> StateAttributeMetadataTagSet
+validateAttributeMetadataTagSet values=
+    if Set.isEmpty values then
+          StateStartAttributeMetadataTagSet
+      else if Set.size values > 50 then
+         StateTooLongAttributeMetadataTagSet
+      else
+          StateAcceptableAttributeMetadataTagSet
+
+
 validate: AttributeMetadata -> AttributeMetadataState
 validate value=
   {
@@ -131,4 +141,4 @@ validate value=
 
 addValidation: AttributeMetadataAndState -> AttributeMetadataAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}

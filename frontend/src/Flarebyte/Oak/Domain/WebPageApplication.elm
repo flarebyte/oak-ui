@@ -5,11 +5,10 @@ import Flarebyte.Oak.Domain.GraphEditorWebPage exposing(GraphEditorWebPage)
 import Flarebyte.Oak.Domain.Language exposing(Language)
 import Flarebyte.Oak.Domain.Node exposing(Node)
 import Flarebyte.Oak.Domain.StatisticalWebPage exposing(StatisticalWebPage)
-import Flarebyte.Oak.Domain.Tag exposing(Tag)
 import Flarebyte.Oak.Domain.UnitCode exposing(UnitCode)
 import Flarebyte.Oak.Domain.VisualChoiceWebPage exposing(VisualChoiceWebPage)
 import Flarebyte.Oak.Domain.WorkProgression exposing(WorkProgression)
-import Set exposing(Set)
+import Set as Set exposing(Set)
 
 type StateWebPageApplicationGraphEditorWebPage = 
 
@@ -39,6 +38,7 @@ type StateWebPageApplicationLanguageList =
 
   StateStartWebPageApplicationLanguageList
   | StateAcceptableWebPageApplicationLanguageList
+  | StateTooLongWebPageApplicationLanguageList
 
 
 type StateWebPageApplicationLanguage = 
@@ -63,12 +63,14 @@ type StateWebPageApplicationTagSet =
 
   StateStartWebPageApplicationTagSet
   | StateAcceptableWebPageApplicationTagSet
+  | StateTooLongWebPageApplicationTagSet
 
 
 type StateWebPageApplicationUnitCodeList = 
 
   StateStartWebPageApplicationUnitCodeList
   | StateAcceptableWebPageApplicationUnitCodeList
+  | StateTooLongWebPageApplicationUnitCodeList
 
 
 type StateWebPageApplicationNode = 
@@ -86,7 +88,7 @@ type alias WebPageApplication =
     ,language: Language
     ,statisticalWebPage: StatisticalWebPage
     ,workProgression: WorkProgression
-    ,tagSet: Set Tag
+    ,tagSet: Set String
     ,unitCodeList: List UnitCode
     ,node: Node
   }
@@ -142,6 +144,16 @@ resetState =
     ,unitCodeList= StateStartWebPageApplicationUnitCodeList
     ,node= StateStartWebPageApplicationNode
   }
+validateWebPageApplicationTagSet: Set String -> StateWebPageApplicationTagSet
+validateWebPageApplicationTagSet values=
+    if Set.isEmpty values then
+          StateStartWebPageApplicationTagSet
+      else if Set.size values > 50 then
+         StateTooLongWebPageApplicationTagSet
+      else
+          StateAcceptableWebPageApplicationTagSet
+
+
 validate: WebPageApplication -> WebPageApplicationState
 validate value=
   {
@@ -161,4 +173,4 @@ validate value=
 
 addValidation: WebPageApplicationAndState -> WebPageApplicationAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}

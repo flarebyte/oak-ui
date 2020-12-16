@@ -86,4 +86,4 @@ validate value=
 
 addValidation: PublicDocumentationAndState -> PublicDocumentationAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}

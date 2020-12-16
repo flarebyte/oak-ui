@@ -75,4 +75,4 @@ validate value=
 
 addValidation: DocumentationCategoryAndState -> DocumentationCategoryAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}

@@ -75,4 +75,4 @@ validate value=
 
 addValidation: LanguageAndState -> LanguageAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}

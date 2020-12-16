@@ -13,6 +13,7 @@ type StateNodeAttributeList =
 
   StateStartNodeAttributeList
   | StateAcceptableNodeAttributeList
+  | StateTooLongNodeAttributeList
 
 type alias Node = 
   {
@@ -64,4 +65,4 @@ validate value=
 
 addValidation: NodeAndState -> NodeAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}

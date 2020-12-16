@@ -152,4 +152,4 @@ validate value=
 
 addValidation: MediaObjectAndState -> MediaObjectAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}

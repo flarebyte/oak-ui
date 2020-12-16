@@ -1,7 +1,6 @@
 module Flarebyte.Oak.Domain.StatisticalMetadata exposing (StatisticalMetadata, StatisticalMetadataState, StatisticalMetadataAndState, reset, resetState)
 
-import Flarebyte.Oak.Domain.Tag exposing(Tag)
-import Set exposing(Set)
+import Set as Set exposing(Set)
 
 type StateStatisticalMetadataName = 
 
@@ -28,13 +27,14 @@ type StateStatisticalMetadataTagSet =
 
   StateStartStatisticalMetadataTagSet
   | StateAcceptableStatisticalMetadataTagSet
+  | StateTooLongStatisticalMetadataTagSet
 
 type alias StatisticalMetadata = 
   {
    name: String
     ,value: String
     ,optionalValueList: List String
-    ,tagSet: Set Tag
+    ,tagSet: Set String
   }
 
 type alias StatisticalMetadataState = 
@@ -97,6 +97,16 @@ validateStatisticalMetadataOptionalValueList values=
           StateAcceptableStatisticalMetadataOptionalValueList
 
 
+validateStatisticalMetadataTagSet: Set String -> StateStatisticalMetadataTagSet
+validateStatisticalMetadataTagSet values=
+    if Set.isEmpty values then
+          StateStartStatisticalMetadataTagSet
+      else if Set.size values > 50 then
+         StateTooLongStatisticalMetadataTagSet
+      else
+          StateAcceptableStatisticalMetadataTagSet
+
+
 validate: StatisticalMetadata -> StatisticalMetadataState
 validate value=
   {
@@ -109,4 +119,4 @@ validate value=
 
 addValidation: StatisticalMetadataAndState -> StatisticalMetadataAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}

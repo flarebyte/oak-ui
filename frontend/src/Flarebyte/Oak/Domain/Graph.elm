@@ -8,18 +8,21 @@ type StateGraphNodeList =
 
   StateStartGraphNodeList
   | StateAcceptableGraphNodeList
+  | StateTooLongGraphNodeList
 
 
 type StateGraphEdgeList = 
 
   StateStartGraphEdgeList
   | StateAcceptableGraphEdgeList
+  | StateTooLongGraphEdgeList
 
 
 type StateGraphAttributeMetadataList = 
 
   StateStartGraphAttributeMetadataList
   | StateAcceptableGraphAttributeMetadataList
+  | StateTooLongGraphAttributeMetadataList
 
 type alias Graph = 
   {
@@ -66,4 +69,4 @@ validate value=
 
 addValidation: GraphAndState -> GraphAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}

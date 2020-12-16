@@ -59,9 +59,7 @@ def to_elm_type(entity: acquire.Entity) -> str:
         return f"List {main_child_name}"
 
     if main_type == "Never" and "Set" in entity.traits:
-        main_child_name = elm.to_type_alias_name(
-            entities_dict[entity.children[0]].naming)
-        return f"Set {main_child_name}"
+        return f"Set String"
 
     if main_type != "Never":
         return main_type
@@ -106,28 +104,46 @@ def to_elm_type_default(entity: acquire.Entity) -> str:
 def to_elm_type_state(parent: acquire.Entity, entity: acquire.Entity) -> elm.ElmType:
     if len(entity.traits) == 0:
         raise Exception(f"Expected trait for {entity.name}")
+    
+    state_main = ["State"]+parent.naming+entity.naming
+    state_start = elm.to_type_alias_name(
+                ["State", "Start"]+parent.naming+entity.naming)
+    state_acceptable = elm.to_type_alias_name(
+                ["State", "Acceptable"]+parent.naming+entity.naming)
+    state_too_long = elm.to_type_alias_name(
+                ["State", "TooLong"]+parent.naming+entity.naming)
+
+    if "Set" in entity.traits:
+        return elm.ElmType(state_main, "", [
+            state_start,
+            state_acceptable,
+            state_too_long
+        ])
+
+    if "List" in entity.traits:
+        return elm.ElmType(state_main, "", [
+            state_start,
+            state_acceptable,
+            state_too_long
+        ])
 
     if "String" in entity.traits or "I18nString" in entity.traits or "URL" in entity.traits:
-        return elm.ElmType(["State"]+parent.naming+entity.naming, "", [
-            elm.to_type_alias_name(
-                ["State", "Start"]+parent.naming+entity.naming),
-            elm.to_type_alias_name(
-                ["State", "Acceptable"]+parent.naming+entity.naming),
-            elm.to_type_alias_name(
-                ["State", "TooLong"]+parent.naming+entity.naming)
+        return elm.ElmType(state_main, "", [
+            state_start,
+            state_acceptable,
+            state_too_long
         ])
-    return elm.ElmType(["State"]+parent.naming+entity.naming, "",  [
-        elm.to_type_alias_name(["State", "Start"]+parent.naming+entity.naming),
-        elm.to_type_alias_name(["State", "Acceptable"] +
-                               parent.naming+entity.naming)
+    return elm.ElmType(state_main, "", [
+            state_start,
+            state_acceptable
     ])
 
 
 def to_import_statement(entity: acquire.Entity) -> List[str]:
     if not is_complex_type(entity):
         return []
-    if "Set" in entity.traits and len(entity.children) == 0:
-        return ["import Set exposing(Set)"]
+    if "Set" in entity.traits:
+        return ["import Set as Set exposing(Set)"]
     if is_just_sequence(entity) and len(entity.children) == 0:
         return []
     naming = entity.naming
@@ -135,8 +151,6 @@ def to_import_statement(entity: acquire.Entity) -> List[str]:
         naming = entities_dict[entity.children[0]].naming
     name = elm.to_type_alias_name(naming)
     results = [f"import Flarebyte.Oak.Domain.{name} exposing({name})"]
-    if "Set" in entity.traits:
-        results.append("import Set exposing(Set)")
     return results
 
 
@@ -195,7 +209,7 @@ def to_type_alias_validator_fn(entity: acquire.Entity, children: acquire.Entity)
     return elm.ElmFunction(["validate"], "", [elm.to_type_alias_name(entity.naming), elm.to_type_alias_name(entity.naming+["State"])], ["value"], lines)
 
 def to_add_validation_fn(entity: acquire.Entity) -> elm.ElmFunction:
-    lines = ["{ value | state = validate value.value}"]
+    lines = ["  { value | state = validate value.value}"]
     return elm.ElmFunction(["Add", "Validation"], "", [elm.to_type_alias_name(entity.naming+["And", "State"]), elm.to_type_alias_name(entity.naming+["And", "State"])], ["value"], lines)
 
 

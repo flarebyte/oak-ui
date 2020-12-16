@@ -6,6 +6,7 @@ type StateStatisticalWebPageStatisticalMetadataList =
 
   StateStartStatisticalWebPageStatisticalMetadataList
   | StateAcceptableStatisticalWebPageStatisticalMetadataList
+  | StateTooLongStatisticalWebPageStatisticalMetadataList
 
 type alias StatisticalWebPage = 
   {
@@ -42,4 +43,4 @@ validate value=
 
 addValidation: StatisticalWebPageAndState -> StatisticalWebPageAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}

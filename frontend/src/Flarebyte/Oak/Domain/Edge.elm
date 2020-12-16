@@ -13,6 +13,7 @@ type StateEdgeAttributeList =
 
   StateStartEdgeAttributeList
   | StateAcceptableEdgeAttributeList
+  | StateTooLongEdgeAttributeList
 
 
 type StateEdgeFromNode = 
@@ -108,4 +109,4 @@ validate value=
 
 addValidation: EdgeAndState -> EdgeAndState
 addValidation value=
-{ value | state = validate value.value}
+  { value | state = validate value.value}
