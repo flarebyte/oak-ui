@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.StatisticalWebPage exposing (StatisticalWebPage, StatisticalWebPageState, StatisticalWebPageAndState, reset, resetState)
+module Flarebyte.Oak.Domain.StatisticalWebPage exposing (StatisticalWebPage, StatisticalWebPageState, StatisticalWebPageAndState, reset, resetState, resetAndState)
 
 import Flarebyte.Oak.Domain.StatisticalMetadata exposing(StatisticalMetadata)
 
@@ -22,6 +22,7 @@ type alias StatisticalWebPageAndState =
   {
    value: StatisticalWebPage
     ,state: StatisticalWebPageState
+    ,isAcceptable: Bool
   }
 reset: StatisticalWebPage 
 reset = 
@@ -33,6 +34,14 @@ resetState: StatisticalWebPageState
 resetState = 
   {
    statisticalMetadataList= StateStartStatisticalWebPageStatisticalMetadataList
+  }
+
+resetAndState: StatisticalWebPageAndState 
+resetAndState = 
+  {
+   value= alpha
+    ,state= beta
+    ,isAcceptable= charlie
   }
 validateStatisticalWebPageStatisticalMetadataList: List StatisticalMetadata -> StateStatisticalWebPageStatisticalMetadataList
 validateStatisticalWebPageStatisticalMetadataList values=

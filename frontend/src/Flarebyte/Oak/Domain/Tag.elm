@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.Tag exposing (Tag, TagState, TagAndState, reset, resetState)
+module Flarebyte.Oak.Domain.Tag exposing (Tag, TagState, TagAndState, reset, resetState, resetAndState)
 
 
 
@@ -31,6 +31,7 @@ type alias TagAndState =
   {
    value: Tag
     ,state: TagState
+    ,isAcceptable: Bool
   }
 reset: Tag 
 reset = 
@@ -44,6 +45,14 @@ resetState =
   {
    name= StateStartTagName
     ,description= StateStartTagDescription
+  }
+
+resetAndState: TagAndState 
+resetAndState = 
+  {
+   value= alpha
+    ,state= beta
+    ,isAcceptable= charlie
   }
 validateTagName: String -> StateTagName
 validateTagName value=

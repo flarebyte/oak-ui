@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.DocumentationCategory exposing (DocumentationCategory, DocumentationCategoryState, DocumentationCategoryAndState, reset, resetState)
+module Flarebyte.Oak.Domain.DocumentationCategory exposing (DocumentationCategory, DocumentationCategoryState, DocumentationCategoryAndState, reset, resetState, resetAndState)
 
 
 
@@ -31,6 +31,7 @@ type alias DocumentationCategoryAndState =
   {
    value: DocumentationCategory
     ,state: DocumentationCategoryState
+    ,isAcceptable: Bool
   }
 reset: DocumentationCategory 
 reset = 
@@ -44,6 +45,14 @@ resetState =
   {
    name= StateStartDocumentationCategoryName
     ,description= StateStartDocumentationCategoryDescription
+  }
+
+resetAndState: DocumentationCategoryAndState 
+resetAndState = 
+  {
+   value= alpha
+    ,state= beta
+    ,isAcceptable= charlie
   }
 validateDocumentationCategoryName: String -> StateDocumentationCategoryName
 validateDocumentationCategoryName value=

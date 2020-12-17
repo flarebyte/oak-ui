@@ -278,10 +278,16 @@ def generate_class_model(name: str):
         typeAliasResetState = elm.TypeAliasAssign(["Reset", "State"], entity.naming+["State"], "exported", [
             to_reset_state_name_value(entity, child) for child in children])
         typeAliasAssigments.append(typeAliasResetState)
+        typeAliasResetAndState = elm.TypeAliasAssign(["Reset", "And", "State"], entity.naming+["And", "State"], "exported", [
+            (["value"], "alpha"), (["state"], "beta"), (["isAcceptable"], "charlie")])
+        typeAliasAssigments.append(typeAliasResetAndState)
         elmTypes += [to_elm_type_state(entity, child) for child in children]
         # Combined type alias
         typeAliasAndState = elm.TypeAlias(entity.naming+["And", "State"], "exported", [
-            (["value"], typeAlias.get_name()), (["state"], typeAliasState.get_name())])
+            (["value"], typeAlias.get_name()),
+            (["state"], typeAliasState.get_name()),
+            (["isAcceptable"], "Bool")
+        ])
         typeAliases.append(typeAliasAndState)
         # Validators
         elmFuntions += [to_string_validator_fn(entity.naming+child.naming, 50)

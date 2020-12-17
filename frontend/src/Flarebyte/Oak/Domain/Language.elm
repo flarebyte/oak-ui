@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.Language exposing (Language, LanguageState, LanguageAndState, reset, resetState)
+module Flarebyte.Oak.Domain.Language exposing (Language, LanguageState, LanguageAndState, reset, resetState, resetAndState)
 
 
 
@@ -31,6 +31,7 @@ type alias LanguageAndState =
   {
    value: Language
     ,state: LanguageState
+    ,isAcceptable: Bool
   }
 reset: Language 
 reset = 
@@ -44,6 +45,14 @@ resetState =
   {
    name= StateStartLanguageName
     ,description= StateStartLanguageDescription
+  }
+
+resetAndState: LanguageAndState 
+resetAndState = 
+  {
+   value= alpha
+    ,state= beta
+    ,isAcceptable= charlie
   }
 validateLanguageName: String -> StateLanguageName
 validateLanguageName value=

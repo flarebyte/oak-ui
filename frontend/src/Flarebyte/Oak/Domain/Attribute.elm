@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.Attribute exposing (Attribute, AttributeState, AttributeAndState, reset, resetState)
+module Flarebyte.Oak.Domain.Attribute exposing (Attribute, AttributeState, AttributeAndState, reset, resetState, resetAndState)
 
 import Set as Set exposing(Set)
 
@@ -40,6 +40,7 @@ type alias AttributeAndState =
   {
    value: Attribute
     ,state: AttributeState
+    ,isAcceptable: Bool
   }
 reset: Attribute 
 reset = 
@@ -55,6 +56,14 @@ resetState =
    value= StateStartAttributeValue
     ,optionalValueList= StateStartAttributeOptionalValueList
     ,tagSet= StateStartAttributeTagSet
+  }
+
+resetAndState: AttributeAndState 
+resetAndState = 
+  {
+   value= alpha
+    ,state= beta
+    ,isAcceptable= charlie
   }
 validateAttributeValue: String -> StateAttributeValue
 validateAttributeValue value=

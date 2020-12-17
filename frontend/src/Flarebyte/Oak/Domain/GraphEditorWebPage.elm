@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.GraphEditorWebPage exposing (GraphEditorWebPage, GraphEditorWebPageState, GraphEditorWebPageAndState, reset, resetState)
+module Flarebyte.Oak.Domain.GraphEditorWebPage exposing (GraphEditorWebPage, GraphEditorWebPageState, GraphEditorWebPageAndState, reset, resetState, resetAndState)
 
 import Flarebyte.Oak.Domain.Graph exposing(Graph)
 import Flarebyte.Oak.Domain.StatisticalMetadata exposing(StatisticalMetadata)
@@ -68,6 +68,7 @@ type alias GraphEditorWebPageAndState =
   {
    value: GraphEditorWebPage
     ,state: GraphEditorWebPageState
+    ,isAcceptable: Bool
   }
 reset: GraphEditorWebPage 
 reset = 
@@ -89,6 +90,14 @@ resetState =
     ,optionalErrorMessage= StateStartGraphEditorWebPageOptionalErrorMessage
     ,tagSet= StateStartGraphEditorWebPageTagSet
     ,unitCodeList= StateStartGraphEditorWebPageUnitCodeList
+  }
+
+resetAndState: GraphEditorWebPageAndState 
+resetAndState = 
+  {
+   value= alpha
+    ,state= beta
+    ,isAcceptable= charlie
   }
 validateGraphEditorWebPageOptionalErrorMessage: String -> StateGraphEditorWebPageOptionalErrorMessage
 validateGraphEditorWebPageOptionalErrorMessage value=

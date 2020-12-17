@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.WebPageApplication exposing (WebPageApplication, WebPageApplicationState, WebPageApplicationAndState, reset, resetState)
+module Flarebyte.Oak.Domain.WebPageApplication exposing (WebPageApplication, WebPageApplicationState, WebPageApplicationAndState, reset, resetState, resetAndState)
 
 import Flarebyte.Oak.Domain.DocumentationListWebPage exposing(DocumentationListWebPage)
 import Flarebyte.Oak.Domain.GraphEditorWebPage exposing(GraphEditorWebPage)
@@ -112,6 +112,7 @@ type alias WebPageApplicationAndState =
   {
    value: WebPageApplication
     ,state: WebPageApplicationState
+    ,isAcceptable: Bool
   }
 reset: WebPageApplication 
 reset = 
@@ -143,6 +144,14 @@ resetState =
     ,tagSet= StateStartWebPageApplicationTagSet
     ,unitCodeList= StateStartWebPageApplicationUnitCodeList
     ,node= StateStartWebPageApplicationNode
+  }
+
+resetAndState: WebPageApplicationAndState 
+resetAndState = 
+  {
+   value= alpha
+    ,state= beta
+    ,isAcceptable= charlie
   }
 validateWebPageApplicationTagSet: Set String -> StateWebPageApplicationTagSet
 validateWebPageApplicationTagSet values=

@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.UnitCode exposing (UnitCode, UnitCodeState, UnitCodeAndState, reset, resetState)
+module Flarebyte.Oak.Domain.UnitCode exposing (UnitCode, UnitCodeState, UnitCodeAndState, reset, resetState, resetAndState)
 
 
 
@@ -31,6 +31,7 @@ type alias UnitCodeAndState =
   {
    value: UnitCode
     ,state: UnitCodeState
+    ,isAcceptable: Bool
   }
 reset: UnitCode 
 reset = 
@@ -44,6 +45,14 @@ resetState =
   {
    name= StateStartUnitCodeName
     ,description= StateStartUnitCodeDescription
+  }
+
+resetAndState: UnitCodeAndState 
+resetAndState = 
+  {
+   value= alpha
+    ,state= beta
+    ,isAcceptable= charlie
   }
 validateUnitCodeName: String -> StateUnitCodeName
 validateUnitCodeName value=

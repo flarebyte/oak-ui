@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.StatisticalMetadata exposing (StatisticalMetadata, StatisticalMetadataState, StatisticalMetadataAndState, reset, resetState)
+module Flarebyte.Oak.Domain.StatisticalMetadata exposing (StatisticalMetadata, StatisticalMetadataState, StatisticalMetadataAndState, reset, resetState, resetAndState)
 
 import Set as Set exposing(Set)
 
@@ -49,6 +49,7 @@ type alias StatisticalMetadataAndState =
   {
    value: StatisticalMetadata
     ,state: StatisticalMetadataState
+    ,isAcceptable: Bool
   }
 reset: StatisticalMetadata 
 reset = 
@@ -66,6 +67,14 @@ resetState =
     ,value= StateStartStatisticalMetadataValue
     ,optionalValueList= StateStartStatisticalMetadataOptionalValueList
     ,tagSet= StateStartStatisticalMetadataTagSet
+  }
+
+resetAndState: StatisticalMetadataAndState 
+resetAndState = 
+  {
+   value= alpha
+    ,state= beta
+    ,isAcceptable= charlie
   }
 validateStatisticalMetadataName: String -> StateStatisticalMetadataName
 validateStatisticalMetadataName value=

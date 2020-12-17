@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.Node exposing (Node, NodeState, NodeAndState, reset, resetState)
+module Flarebyte.Oak.Domain.Node exposing (Node, NodeState, NodeAndState, reset, resetState, resetAndState)
 
 import Flarebyte.Oak.Domain.Attribute exposing(Attribute)
 
@@ -31,6 +31,7 @@ type alias NodeAndState =
   {
    value: Node
     ,state: NodeState
+    ,isAcceptable: Bool
   }
 reset: Node 
 reset = 
@@ -44,6 +45,14 @@ resetState =
   {
    name= StateStartNodeName
     ,attributeList= StateStartNodeAttributeList
+  }
+
+resetAndState: NodeAndState 
+resetAndState = 
+  {
+   value= alpha
+    ,state= beta
+    ,isAcceptable= charlie
   }
 validateNodeName: String -> StateNodeName
 validateNodeName value=

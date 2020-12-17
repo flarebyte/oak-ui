@@ -1,4 +1,4 @@
-module Flarebyte.Oak.Domain.MediaObject exposing (MediaObject, MediaObjectState, MediaObjectAndState, reset, resetState)
+module Flarebyte.Oak.Domain.MediaObject exposing (MediaObject, MediaObjectState, MediaObjectAndState, reset, resetState, resetAndState)
 
 import Flarebyte.Oak.Domain.MediaObjectDataType exposing(MediaObjectDataType)
 
@@ -66,6 +66,7 @@ type alias MediaObjectAndState =
   {
    value: MediaObject
     ,state: MediaObjectState
+    ,isAcceptable: Bool
   }
 reset: MediaObject 
 reset = 
@@ -87,6 +88,14 @@ resetState =
     ,protectedMediaObjectURL= StateStartMediaObjectProtectedMediaObjectURL
     ,mediaObjectDataType= StateStartMediaObjectMediaObjectDataType
     ,robotCreatorName= StateStartMediaObjectRobotCreatorName
+  }
+
+resetAndState: MediaObjectAndState 
+resetAndState = 
+  {
+   value= alpha
+    ,state= beta
+    ,isAcceptable= charlie
   }
 validateMediaObjectName: String -> StateMediaObjectName
 validateMediaObjectName value=
