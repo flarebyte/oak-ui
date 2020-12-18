@@ -3,8 +3,11 @@ import sys
 from typing import List, Dict, Tuple, NamedTuple, Literal
 import elm
 import json
+import csv
 from enum import Enum, auto
 import acquire
+from name_utils import to_pascal_case, to_camel_case
+
 
 entities = acquire.read_entity_csv()
 entities_dict = {entity.name: entity for entity in entities}
@@ -20,15 +23,20 @@ class ExpandedItem(NamedTuple):
     name: str
     module: str
     kind: EXPANDED_TYPE
-    private: bool
+    about: str
+    flags: List[str]
     signature: List[str]
     params: List[str]
     
 expanded_items: List[ExpandedItem] = []
-
-def saveExpandedModelAsJson(jsonContent):
-    with open('app-model.json', 'w') as outfile:
-            json.dump(jsonContent, outfile, indent=2)
+csv_fieldnames = ['name', 'module', 'kind', 'about', 'flags', 'signature', 'params']
+def write_expanded_items(items: List[ExpandedItem] ):
+    with open('app.model.csv', 'w', newline='') as csvfile:
+        app_writer = csv.writer(csvfile)
+        app_writer.writerow(csv_fieldnames)
+        for item in items:
+            item_row = (item[0], item[1], item[2], item[3], " ".join(item[4]), "->".join(item[5]), " ".join(item[6]))
+            app_writer.writerow(item_row)
 
 def flatten(values: List) -> List:
     return [item for subl in values for item in subl]
@@ -141,11 +149,12 @@ module_set = set()
 
 def generate(name: str):
     entity = entities_dict[name]
-    module_name = f"Flarebyte.Oak.Domain.{elm.to_type_alias_name(entity.naming)}"
+    module_name = f"Flarebyte.Oak.Domain.{to_pascal_case(entity.naming)}"
     if module_name in module_set:
         # skip before just created
         return
     module_set.add(module_name)
+    expanded_items.append(ExpandedItem(to_pascal_case(entity.naming), module_name, TYPE_ITEM, to_pascal_case(entity.naming), "", [], []))
     print(module_name)
     children = [entities_dict[child] for child in entity.children]
     # recursively read the children
@@ -163,3 +172,4 @@ def generate(name: str):
 
 
 generate('Web Application')
+write_expanded_items(expanded_items)
