@@ -3,17 +3,20 @@ import re
 from pathlib import Path
 import time
 
-NameType = Tuple[List[str], str]
-NameValue = Tuple[List[str], str]
-
 non_az09 = re.compile('[^A-Za-z0-9]+')
 
 base_dir = "frontend/src"
 
+class NameType(NamedTuple):
+    naming: List[str]
+    a_type: str
+   
+class NameValue(NamedTuple):
+    naming: List[str]
+    value: str
 
 def contract(name: str) -> str:
     return non_az09.sub('', name.strip())
-
 
 def to_type_alias_name(namings: List[str]) -> str:
     return "".join([contract(n) for n in namings])
