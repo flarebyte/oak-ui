@@ -6,7 +6,7 @@ import json
 import csv
 from enum import Enum, auto
 import acquire
-from name_utils import to_pascal_case, to_camel_case
+from name_utils import to_pascal_case, to_camel_case, to_kebab_case
 
 
 entities = acquire.read_entity_csv()
@@ -154,9 +154,14 @@ def generate(name: str):
         # skip before just created
         return
     module_set.add(module_name)
-    expanded_items.append(ExpandedItem(to_pascal_case(entity.naming), module_name, TYPE_ITEM, to_pascal_case(entity.naming), "", [], []))
+    # expanded_items.append(ExpandedItem(to_pascal_case(entity.naming), module_name, TYPE_ITEM, to_pascal_case(entity.naming), "", [], []))
     print(module_name)
     children = [entities_dict[child] for child in entity.children]
+    for child in children:
+        prefix = to_kebab_case(entity.naming) + "/"
+        #Main type alias
+        expanded_items.append(ExpandedItem(to_pascal_case(child.naming), module_name, TYPE_ALIAS_FIELD, prefix+"type-alias", "", [to_elm_type(child)], []))
+        
     # recursively read the children
     for child in children:
         if not is_complex_type(child):
